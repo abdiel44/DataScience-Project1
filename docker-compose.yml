@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    container_name: ds_template_app
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: python src/main.py --input data/raw/dataset.csv --output data/processed/dataset_limpio.csv
+
