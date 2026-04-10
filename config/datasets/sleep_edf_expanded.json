@@ -1,0 +1,11 @@
+{
+  "description": "Sleep-EDF Expanded: CSV propio tras export desde EDF/hypnogram (p. ej. con mne). Ajustar nominal_columns y target_column a los nombres reales del archivo.",
+  "target_column": "sleep_stage",
+  "nominal_columns": ["sleep_stage"],
+  "ordinal_columns": {},
+  "binary_columns": [],
+  "numeric_scaling": "standardize",
+  "scale_exclude": ["subject_id", "recording_id"],
+  "class_balance_method": "none",
+  "dimensionality_method": "none"
+}

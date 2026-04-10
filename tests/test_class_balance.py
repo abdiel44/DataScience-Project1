@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from src.class_balance import (
+from pre_processing.class_balance import (
     ClassBalanceOptions,
     align_balance_options_to_snake_case,
     balance_dataframe,

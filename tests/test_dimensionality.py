@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.dimensionality import (
+from pre_processing.dimensionality import (
     DimensionalityOptions,
     apply_dimensionality,
     dimensionality_options_from_dict,

@@ -1,0 +1,43 @@
+# Contrato de alcance experimental — Proyecto 1 (Fase A)
+# Complementa docs/ALCANCE_EXPERIMENTAL.md
+
+project:
+  name: "Machine Learning: estadificación del sueño y detección de apnea (EEG monocanal)"
+  reference: "docs/Proyecto-1.pdf"
+
+tasks:
+  sleep_staging:
+    label_set_aasm: [W, N1, N2, N3, REM]
+    epoch_seconds: 30
+  apnea_detection:
+    epoch_seconds: 30
+
+dataset_label_mapping:
+  sleep_edf_expanded:
+    staging_raw: [W, N1, N2, N3, REM]
+    staging_to_aasm: identidad
+  mit_bih_psg:
+    staging_sleep_stage_column: sleep_stage
+    respiratory_events_column: event_tokens
+  shhs:
+    staging_sleep_stage_column: sleep_stage
+  st_vincent_apnea:
+    target_default_column: stage_mode
+  isruc_sleep:
+    event_group: event_group
+
+eeg_single_channel:
+  policy: "Conservar una sola columna EEG acordada antes del modelado."
+  recommended_signals:
+    mit_bih_psg: "EEG (C4-A1) o equivalente en .hea por registro"
+    shhs: "EEG o EEG(sec) según .hea del registro"
+    sleep_edf_expanded: "Canal frontal/central documentado en el informe"
+    isruc_sleep: "Fijar montaje homologado entre lotes"
+
+reproducibility:
+  global_seed: 42
+
+# Subject-wise CV (Fase E): usar la misma columna que modeling.ensure_subject_unit_column
+# (record_id en exports WFDB, recording_id en St. Vincent / Sleep-EDF, subject_unit_id en ISRUC).
+modeling_cv:
+  preferred_subject_column: subject_unit_id

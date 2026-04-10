@@ -178,13 +178,20 @@ def generate_plots(df: pd.DataFrame, target_col: str, output_dir: Path, top_n: i
         raise ValueError(f"Target column not found for target distribution plot: {target_col}")
 
     target_path = output_dir / "fig_target_distribution.png"
-    target_counts = df[target_col].astype("string").fillna("<MISSING>").value_counts()
+    tser = df[target_col]
     plt.figure(figsize=(8, 4))
-    sns.barplot(x=target_counts.index, y=target_counts.values)
-    plt.title(f"Target Distribution - {target_col}")
-    plt.xlabel(target_col)
-    plt.ylabel("Count")
-    plt.xticks(rotation=45, ha="right")
+    if pd.api.types.is_numeric_dtype(tser) and tser.nunique(dropna=True) > 25:
+        sns.histplot(pd.to_numeric(tser, errors="coerce").dropna(), bins=40, kde=True)
+        plt.title(f"Target Distribution - {target_col} (numeric)")
+        plt.xlabel(target_col)
+        plt.ylabel("Count")
+    else:
+        target_counts = tser.astype("string").fillna("<MISSING>").value_counts()
+        sns.barplot(x=target_counts.index, y=target_counts.values)
+        plt.title(f"Target Distribution - {target_col}")
+        plt.xlabel(target_col)
+        plt.ylabel("Count")
+        plt.xticks(rotation=45, ha="right")
     plt.tight_layout()
     plt.savefig(target_path)
     plt.close()
@@ -223,8 +230,13 @@ def write_markdown_summary(
     if not top_missing_lines:
         top_missing_lines = "- No missing values detected."
 
-    class_distribution = df[target_col].astype("string").fillna("<MISSING>").value_counts(normalize=True) * 100
-    class_lines = "\n".join(f"- `{label}`: {value:.2f}%" for label, value in class_distribution.items())
+    tcol = df[target_col]
+    if pd.api.types.is_numeric_dtype(tcol) and tcol.nunique(dropna=True) > 25:
+        desc = tcol.describe()
+        class_lines = "\n".join(f"- `{k}`: {float(v):.6g}" for k, v in desc.items())
+    else:
+        class_distribution = tcol.astype("string").fillna("<MISSING>").value_counts(normalize=True) * 100
+        class_lines = "\n".join(f"- `{label}`: {value:.2f}%" for label, value in class_distribution.items())
 
     numeric_notes = ""
     if not numeric_df.empty:

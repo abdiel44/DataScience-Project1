@@ -1,0 +1,11 @@
+{
+  "description": "MIT-BIH PSG: 30 s epochs from WFDB annotator st; target is sleep_stage (W,1,2,3,4,R).",
+  "target_column": "sleep_stage",
+  "nominal_columns": ["sleep_stage"],
+  "ordinal_columns": {},
+  "binary_columns": [],
+  "numeric_scaling": "standardize",
+  "scale_exclude": ["record_id", "aux_raw"],
+  "class_balance_method": "none",
+  "dimensionality_method": "none"
+}

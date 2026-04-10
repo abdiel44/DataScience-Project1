@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.encoding import (
+from pre_processing.encoding import (
     VariableEncodingSpec,
     align_spec_to_snake_case,
     encode_dataframe,

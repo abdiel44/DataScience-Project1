@@ -1,0 +1,11 @@
+{
+  "description": "SHHS: 30 s hypnogram epochs; target sleep_stage from hypn annotations.",
+  "target_column": "sleep_stage",
+  "nominal_columns": ["sleep_stage"],
+  "ordinal_columns": {},
+  "binary_columns": [],
+  "numeric_scaling": "standardize",
+  "scale_exclude": ["record_id"],
+  "class_balance_method": "none",
+  "dimensionality_method": "none"
+}

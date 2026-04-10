@@ -1,0 +1,11 @@
+{
+  "description": "SHHS: respiratory (resp) and arousal (arou) annotations aligned to 30 s windows.",
+  "target_column": "event_label",
+  "nominal_columns": ["event_label", "annotation_source"],
+  "ordinal_columns": {},
+  "binary_columns": [],
+  "numeric_scaling": "standardize",
+  "scale_exclude": ["record_id"],
+  "class_balance_method": "none",
+  "dimensionality_method": "none"
+}

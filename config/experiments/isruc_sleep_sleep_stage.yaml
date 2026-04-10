@@ -1,0 +1,41 @@
+# ISRUC-Sleep — cuando sleep_stage está presente (parseado del nombre de archivo).
+# Filas sin etapa pueden necesitar filtrado previo en CSV.
+
+experiment_name: isruc_sleep_stage
+random_seed: 42
+train_csv: data/processed/isruc_sleep.csv
+cross_dataset: false
+eval_csv: null
+
+subject_column: subject_unit_id
+target_column: sleep_stage
+task: multiclass
+
+feature_exclude:
+  - source_file
+  - event_group
+
+feature_include: null
+
+cv:
+  n_splits: 5
+  stratify: true
+  shuffle: true
+
+output:
+  root: reports/experiments
+
+models:
+  svm_rbf: true
+  random_forest: true
+  xgboost: true
+
+hyperparams:
+  svm_rbf: { C: 1.0, gamma: scale }
+  random_forest: { n_estimators: 200, max_depth: null, n_jobs: -1 }
+  xgboost:
+    n_estimators: 150
+    max_depth: 4
+    learning_rate: 0.1
+    n_jobs: -1
+    tree_method: hist

@@ -1,0 +1,11 @@
+{
+  "description": "MIT-BIH: epochs where respiratory/movement event tokens appear in st aux (after sleep stage token).",
+  "target_column": "event_tokens",
+  "nominal_columns": ["event_tokens"],
+  "ordinal_columns": {},
+  "binary_columns": [],
+  "numeric_scaling": "standardize",
+  "scale_exclude": ["record_id", "aux_raw"],
+  "class_balance_method": "none",
+  "dimensionality_method": "none"
+}

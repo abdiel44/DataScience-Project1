@@ -1,0 +1,24 @@
+# =============================================================================
+# Reproducibilidad - Proyecto 1 (Data Science)
+# Python recomendado: 3.11.x
+# =============================================================================
+
+# Entorno: python -m venv .venv ; .venv\\Scripts\\activate ; pip install -r requirements.txt
+# Docker: docker compose build
+#        docker compose run --rm app python src/main.py --input data/raw/d.csv --output data/processed/out.csv
+# Semillas: config/reproducibility.env.example | Informe: python --version, git rev-parse HEAD
+
+# Preprocesamiento: python src/main.py --input ... --output ... --write-cleaning-report --task T --target-col y
+# Fase C (con spec JSON): python src/main.py --input data/processed/mitbih_sleep_stages.csv --output data/processed/mitbih_prep.csv --encoding-spec config/datasets/mitbih_sleep_stages.json --target-col sleep_stage --task mitbih_staging --write-cleaning-report
+# EDA (solo limpio): python src/main.py ... --run-eda --task T --target-col y --eda-outdir reports/eda/T
+# Fase D (EDA sobre tabla ya preprocesada): python src/main.py --input ... --output ... --encoding-spec config/datasets/mitbih_sleep_stages.json --target-col sleep_stage --task mitbih_d --run-eda --run-eda-processed
+# Fase B (EDA sobre CSV tabular/export sin pipeline de limpieza): python scripts/raw_eda.py --input data/processed/mitbih_sleep_stages.csv --target-col sleep_stage --task mitbih_sleep_raw
+# Ingesta: python src/main.py --source mit-bih-psg --raw-root data/raw --output data/processed/m.csv --task mb --target-col sleep_stage
+# Export WFDB: python src/main.py --export-epochs mit-bih-psg --raw-root data/raw --output-stages st.csv --output-events ev.csv
+# Fase E (CV / cross-dataset desde YAML): presets en config/experiments/*.yaml o copiar experiment_train.example.yaml; ejecutar:
+#   python scripts/run_phase_e_cv.py --config config/experiments/mitbih_sleep_stages.yaml
+#   python scripts/run_phase_e_cv.py --config config/mi_experimento.yaml
+#   (equiv.: PYTHONPATH=src python -m modeling.train_runner --config ...)
+# Cross-dataset: en el YAML cross_dataset: true y eval_csv: ruta/al/otro.csv
+# Tests: pytest -q  |  opcional tres modelos: pytest -q -m slow
+# Opcional entrega final: pip freeze > requirements-freeze.txt

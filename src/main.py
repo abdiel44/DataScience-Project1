@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple, Union
 
 import pandas as pd
 
-from class_balance import (
+from pre_processing.class_balance import (
     ClassBalanceOptions,
     ClassBalanceReport,
     align_balance_options_to_snake_case,
@@ -15,9 +16,9 @@ from class_balance import (
     class_balance_options_from_dict,
     write_class_balance_report,
 )
-from cleaning import CleaningOptions, CleaningReport, clean_dataframe, to_snake_case, write_cleaning_artifacts
-from eda import run_eda
-from encoding import (
+from pre_processing.cleaning import CleaningOptions, CleaningReport, clean_dataframe, to_snake_case, write_cleaning_artifacts
+from pre_processing.eda import run_eda
+from pre_processing.encoding import (
     EncodingReport,
     VariableEncodingSpec,
     align_spec_to_snake_case,
@@ -26,7 +27,7 @@ from encoding import (
     variable_encoding_spec_from_dict,
     write_encoding_report,
 )
-from dimensionality import (
+from pre_processing.dimensionality import (
     DimensionalityOptions,
     DimensionalityReport,
     align_dimensionality_options_to_snake_case,
@@ -34,7 +35,9 @@ from dimensionality import (
     dimensionality_options_from_dict,
     write_dimensionality_report,
 )
-from scaling import (
+from pre_processing.raw_loaders import SourceId, ingest_by_source_id
+from pre_processing.wfdb_epoch_export import export_mitbih_two_csvs, export_shhs_two_csvs
+from pre_processing.scaling import (
     ScalingOptions,
     ScalingReport,
     align_scaling_options_to_snake_case,
@@ -42,6 +45,14 @@ from scaling import (
     scaling_options_from_dict,
     write_scaling_summary,
 )
+
+_SOURCE_CLI_TO_ID: Dict[str, SourceId] = {
+    "isruc-sleep": "isruc_sleep",
+    "st-vincent-apnea": "st_vincent_apnea",
+    "sleep-edf-expanded": "sleep_edf_expanded",
+    "mit-bih-psg": "mit_bih_psg",
+    "shhs-psg": "shhs_psg",
+}
 
 
 def _parse_comma_separated(value: Optional[str]) -> Optional[Tuple[str, ...]]:
@@ -288,10 +299,11 @@ def step_exploratory_data_analysis(
     target_col_raw: str,
     eda_outdir: Optional[Path],
     top_n_plots: int,
+    report_subdir: str = "eda",
 ) -> Dict[str, Any]:
-    """EDA on cleaned (interpretable) data."""
+    """EDA on cleaned-only data (default) or on the fully preprocessed dataframe (Phase D: report_subdir='eda_processed')."""
     task_slug = to_snake_case(task) if task else "default"
-    output_dir = eda_outdir if eda_outdir is not None else Path("reports") / "eda" / task_slug
+    output_dir = eda_outdir if eda_outdir is not None else Path("reports") / report_subdir / task_slug
     target_col = to_snake_case(target_col_raw)
     return run_eda(
         df=df,
@@ -306,14 +318,73 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Data preprocessing: cleaning -> encoding -> class balance -> scaling -> dimensionality (each optional) -> optional EDA.",
     )
-    parser.add_argument("--input", type=str, required=True, help="Path to input CSV file.")
+    parser.add_argument(
+        "--input",
+        type=str,
+        required=False,
+        default=None,
+        help="Path to input CSV file. Omit when using --source to build a table from data/raw.",
+    )
+    parser.add_argument(
+        "--source",
+        type=str,
+        choices=["none", *_SOURCE_CLI_TO_ID.keys()],
+        default="none",
+        help="Build a tabular dataframe from a known dataset under --raw-root (then run the same pipeline as CSV).",
+    )
+    parser.add_argument(
+        "--raw-root",
+        type=str,
+        default="data/raw",
+        help="Directory containing downloaded dataset folders (default: data/raw).",
+    )
+    parser.add_argument(
+        "--ingest-max-files",
+        type=int,
+        default=None,
+        help="Optional cap on files scanned (ISRUC CSVs or sleep-edf PSG EDFs) for faster tests.",
+    )
     parser.add_argument(
         "--no-header",
         action="store_true",
         help="CSV has no header row; first row is data (columns become 0,1,2,... then normalized in cleaning).",
     )
-    parser.add_argument("--output", type=str, required=True, help="Path to output CSV file.")
-    parser.add_argument("--run-eda", action="store_true", help="Run EDA after cleaning (on cleaned data, not encoded).")
+    parser.add_argument(
+        "--output",
+        type=str,
+        required=False,
+        default=None,
+        help="Path to output CSV file (required unless using --export-epochs only).",
+    )
+    parser.add_argument(
+        "--export-epochs",
+        type=str,
+        choices=["none", "mit-bih-psg", "shhs-psg"],
+        default="none",
+        help="Write two 30 s epoch CSVs (sleep stages + respiratory/events) from WFDB under --raw-root, then exit.",
+    )
+    parser.add_argument(
+        "--output-stages",
+        type=str,
+        default=None,
+        help="With --export-epochs: path for sleep-stage epoch CSV.",
+    )
+    parser.add_argument(
+        "--output-events",
+        type=str,
+        default=None,
+        help="With --export-epochs: path for respiratory/event epoch CSV.",
+    )
+    parser.add_argument(
+        "--run-eda",
+        action="store_true",
+        help="Run EDA after the pipeline step (default: on cleaned data only; use --run-eda-processed for post-pipeline table).",
+    )
+    parser.add_argument(
+        "--run-eda-processed",
+        action="store_true",
+        help="With --run-eda: run EDA on the final output (after encoding/balance/scaling/dimensionality). Default dir: reports/eda_processed/<task>.",
+    )
     parser.add_argument(
         "--task",
         type=str,
@@ -531,16 +602,65 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
 
-    input_path = Path(args.input)
+    if args.export_epochs != "none":
+        if not args.output_stages or not args.output_events:
+            raise ValueError("--export-epochs requires both --output-stages and --output-events.")
+        raw_root = Path(args.raw_root)
+        if not raw_root.is_dir():
+            raise FileNotFoundError(f"--raw-root not found: {raw_root}")
+        out_st = Path(args.output_stages)
+        out_ev = Path(args.output_events)
+        mr = args.ingest_max_files
+        if args.export_epochs == "mit-bih-psg":
+            stats = export_mitbih_two_csvs(
+                raw_root,
+                out_st,
+                out_ev,
+                max_records=mr,
+            )
+        else:
+            stats = export_shhs_two_csvs(
+                raw_root,
+                out_st,
+                out_ev,
+                max_records=mr,
+            )
+        print(
+            f"Export ({args.export_epochs}): staging_rows={stats.n_staging_rows}, "
+            f"event_rows={stats.n_event_rows}, skipped_other={stats.n_epochs_skipped_other}, "
+            f"records={stats.n_records}",
+        )
+        print(f"  Wrote: {out_st}")
+        print(f"  Wrote: {out_ev}")
+        sys.exit(0)
+
+    if not args.output:
+        raise ValueError("--output is required unless using --export-epochs.")
+
     output_path = Path(args.output)
 
-    if not input_path.exists():
-        raise FileNotFoundError(f"Input file not found: {input_path}")
+    if args.source != "none":
+        raw_root = Path(args.raw_root)
+        if not raw_root.is_dir():
+            raise FileNotFoundError(f"--raw-root not found: {raw_root}")
+        sid = _SOURCE_CLI_TO_ID[args.source]
+        df, ingest_meta = ingest_by_source_id(sid, raw_root, max_files=args.ingest_max_files)
+        print(
+            f"Ingest ({args.source}): rows={len(df)}, files_used={ingest_meta.n_files_used}, "
+            f"skipped={ingest_meta.n_files_skipped}",
+        )
+        for note in ingest_meta.notes:
+            print(f"  Note: {note}")
+    else:
+        if not args.input:
+            raise ValueError("Either --input or --source must be provided.")
+        input_path = Path(args.input)
+        if not input_path.exists():
+            raise FileNotFoundError(f"Input file not found: {input_path}")
+        df = pd.read_csv(input_path, header=None) if args.no_header else pd.read_csv(input_path)
 
     if args.drop_rows_target_missing and not args.target_col:
         raise ValueError("--drop-rows-target-missing requires --target-col.")
-
-    df = pd.read_csv(input_path, header=None) if args.no_header else pd.read_csv(input_path)
 
     cleaning_options = CleaningOptions(
         target_col=args.target_col,
@@ -650,19 +770,25 @@ def main() -> None:
     output_df.to_csv(output_path, index=False)
     print(f"  Saved file: {output_path}")
 
+    if args.run_eda_processed and not args.run_eda:
+        raise ValueError("--run-eda-processed requires --run-eda.")
+
     if args.run_eda:
         if not args.target_col:
             raise ValueError("--target-col is required when --run-eda is enabled.")
         if not args.task:
             raise ValueError("--task is required when --run-eda is enabled.")
 
+        eda_df = output_df if args.run_eda_processed else clean_df
+        report_subdir = "eda_processed" if args.run_eda_processed else "eda"
         eda_output_dir = Path(args.eda_outdir) if args.eda_outdir else None
         eda_results = step_exploratory_data_analysis(
-            clean_df,
+            eda_df,
             task=args.task,
             target_col_raw=args.target_col,
             eda_outdir=eda_output_dir,
             top_n_plots=int(args.top_n_plots),
+            report_subdir=report_subdir,
         )
         print("EDA finished")
         print(f"  EDA summary: {eda_results['summary']}")

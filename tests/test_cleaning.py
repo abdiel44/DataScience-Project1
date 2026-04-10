@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.cleaning import (
+from pre_processing.cleaning import (
     CleaningOptions,
     clean_dataframe,
     write_cleaning_artifacts,

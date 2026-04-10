@@ -1,0 +1,68 @@
+# Phase E — contrato de experimento (CV subject-wise y/o evaluación cross-dataset).
+# Copiar a p. ej. config/my_experiment.yaml y ajustar rutas absolutas en Colab si hace falta.
+
+experiment_name: example_run
+random_seed: 42
+
+# CSV procesado por main.py (ruta relativa al cwd o absoluta)
+train_csv: data/processed/train.csv
+
+# Cross-dataset (PRD E3): entrenar en train_csv completo, evaluar en eval_csv sin tunear en B.
+# Si cross_dataset es true, se requiere eval_csv y se omite el bucle CV (salvo inner_cv en futuro).
+cross_dataset: false
+eval_csv: null
+
+subject_column: subject_unit_id
+target_column: sleep_stage
+
+# binary → métricas apnea; por defecto el target debe ser 0/1 en el CSV (ver train_runner).
+# multiclass → accuracy, macro-F1, kappa
+task: multiclass
+
+# Si task=binary: true (defecto) exige etiquetas 0/1 (int/float/bool o strings "0"/"1").
+# Si necesitas dos clases arbitrarias (p. ej. neg/pos), pon false.
+binary_require_zero_one_labels: true
+
+# Varias señales tipo wfdb (*_mean / *_std) sin feature_include → error (PRD EEG monocanal).
+# Solo en casos excepcionales: true
+allow_multi_channel_features: false
+
+# Columnas a excluir de X (IDs, texto, auxiliares). El target y subject_column se excluyen siempre.
+feature_exclude:
+  - source_file
+  - aux_raw
+
+# null o [] = todas las columnas numéricas salvo subject, target y feature_exclude.
+# Lista no vacía = solo esas columnas (deben ser numéricas). Útil para PRD §4.2 EEG monocanal.
+feature_include: null
+
+cv:
+  n_splits: 5
+  stratify: true
+  shuffle: true
+
+# Salidas bajo output.root / experiment_name /
+output:
+  root: reports/experiments
+
+# Qué modelos ejecutar (E2)
+models:
+  svm_rbf: true
+  random_forest: true
+  xgboost: true
+
+# Hiperparámetros fijos (tuning explícito solo en train por fold queda para el equipo / Colab)
+hyperparams:
+  svm_rbf:
+    C: 1.0
+    gamma: scale
+  random_forest:
+    n_estimators: 200
+    max_depth: null
+    n_jobs: -1
+  xgboost:
+    n_estimators: 150
+    max_depth: 4
+    learning_rate: 0.1
+    n_jobs: -1
+    tree_method: hist

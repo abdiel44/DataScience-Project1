@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.eda import run_eda
+from pre_processing.eda import run_eda
 
 
 def test_run_eda_generates_expected_outputs(tmp_path: Path) -> None:

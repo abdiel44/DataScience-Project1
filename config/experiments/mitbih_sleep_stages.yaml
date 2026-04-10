@@ -1,0 +1,51 @@
+# MIT-BIH PSG — estadificación (épocas ~30 s). Alineado con PRD §4.1 y export WFDB.
+# Solo ajusta train_csv (y rutas) si tu archivo tiene otro nombre.
+
+experiment_name: mitbih_sleep_stages
+random_seed: 42
+train_csv: data/processed/mitbih_sleep_stages.csv
+cross_dataset: false
+eval_csv: null
+
+subject_column: record_id
+target_column: sleep_stage
+task: multiclass
+
+# Metadatos de época que no son features PSG (ver wfdb_epoch_export.py)
+feature_exclude:
+  - epoch_index
+  - epoch_start_sample
+  - epoch_end_sample
+  - epoch_start_sec
+  - epoch_end_sec
+  - aux_raw
+
+# PRD §4.2 EEG monocanal: lista explícita de columnas del canal elegido, p. ej.:
+# feature_include:
+#   - eeg_c4_a1_mean
+#   - eeg_c4_a1_std
+# Sustituye por los nombres reales de tu .hea (snake_case tras cleaning).
+feature_include: null
+
+cv:
+  n_splits: 5
+  stratify: true
+  shuffle: true
+
+output:
+  root: reports/experiments
+
+models:
+  svm_rbf: true
+  random_forest: true
+  xgboost: true
+
+hyperparams:
+  svm_rbf: { C: 1.0, gamma: scale }
+  random_forest: { n_estimators: 200, max_depth: null, n_jobs: -1 }
+  xgboost:
+    n_estimators: 150
+    max_depth: 4
+    learning_rate: 0.1
+    n_jobs: -1
+    tree_method: hist

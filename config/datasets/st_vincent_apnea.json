@@ -1,0 +1,11 @@
+{
+  "description": "St Vincent: one row per ucddb*_stage.txt hypnogram summary.",
+  "target_column": "stage_mode",
+  "nominal_columns": [],
+  "ordinal_columns": {},
+  "binary_columns": [],
+  "numeric_scaling": "standardize",
+  "scale_exclude": ["recording_id"],
+  "class_balance_method": "none",
+  "dimensionality_method": "none"
+}

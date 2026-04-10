@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.encoding import align_spec_to_snake_case, encode_dataframe, variable_encoding_spec_from_dict
-from src.scaling import (
+from pre_processing.encoding import align_spec_to_snake_case, encode_dataframe, variable_encoding_spec_from_dict
+from pre_processing.scaling import (
     ScalingOptions,
     align_scaling_options_to_snake_case,
     scale_numeric_dataframe,

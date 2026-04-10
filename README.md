@@ -74,6 +74,10 @@ python src/main.py --input data/raw/profesor_dataset.csv --output data/processed
 
 Además de limpiar el dataset, el pipeline puede ejecutar una etapa de EDA que genera tablas, figuras y un resumen en Markdown para tu informe.
 
+- **Fase B (datos brutos / tabular exportado):** [`scripts/raw_eda.py`](scripts/raw_eda.py) lee un CSV, normaliza nombres de columnas a snake_case y escribe en `reports/eda_raw/<task>/` **sin** pasar por limpieza, codificación ni escalado de `main.py`. Úsalo para caracterizar exports WFDB→CSV u otras tablas antes del preprocesamiento completo (ver [docs/EDA_METODOLOGIA.md](docs/EDA_METODOLOGIA.md)).
+- **Tras el pipeline de `main.py`:** con `--run-eda`, el EDA corre por defecto sobre el dataframe **solo limpio** (sin codificar ni escalar); la salida va a `--eda-outdir` o `reports/eda/<task>/`.
+- **Fase D (datos ya preprocesados):** usa `--run-eda` junto con **`--run-eda-processed`** para analizar la tabla **final** (tras encoding, balanceo, escalado, dimensionalidad). Salida por defecto: `reports/eda_processed/<task>/`. Detalle: [docs/EDA_POST_PREPROCESAMIENTO.md](docs/EDA_POST_PREPROCESAMIENTO.md).
+
 ### Ejemplo: clasificación de etapas de sueño
 
 ```bash
@@ -119,7 +123,7 @@ En el directorio de salida indicado (`--eda-outdir`) se generan:
 
 El CSV de `--output` refleja **limpieza → codificación (si aplica) → balance de clases (si aplica) → escalado (si aplica) → dimensionalidad (si aplica)**.
 
-**EDA (`eda.py`), opcional con `--run-eda`:** sobre el dataframe **solo limpio** (sin codificar ni escalar), para tablas y gráficos interpretables.
+**EDA (`eda.py`), opcional con `--run-eda`:** por defecto sobre el dataframe **solo limpio** (sin codificar ni escalar). Con **`--run-eda-processed`** (Fase D), el EDA usa la tabla **final** del pipeline; salida por defecto `reports/eda_processed/<task>/`.
 
 Ejemplo de `mi_spec.json` (las claves de escalado las lee `scaling.py`; `encoding.py` las ignora al codificar):
 
@@ -149,6 +153,35 @@ Para activar balanceo solo vía JSON (sin columnas de codificación), usa un `--
 ```bash
 pytest -q
 ```
+
+Por defecto se excluyen pruebas marcadas `slow`. Para incluir el smoke de Fase E con los tres modelos: `pytest -q -m slow`.
+
+## Alcance experimental y reproducibilidad (Fase A)
+
+- **Alcance y etiquetas:** [docs/ALCANCE_EXPERIMENTAL.md](docs/ALCANCE_EXPERIMENTAL.md) y [config/experiment_scope.yaml](config/experiment_scope.yaml).
+- **Comandos de ejemplo:** [reproducir.txt](reproducir.txt) (requisito del curso).
+- **Semillas:** [config/reproducibility.env.example](config/reproducibility.env.example).
+- **Uso de IA (plantilla para el informe):** [docs/USO_IA_PLANTILLA.md](docs/USO_IA_PLANTILLA.md).
+
+## Preprocesamiento y configuraciones (Fase C)
+
+- **Diseño metodológico (ventanas, escalado, límites del pipeline):** [docs/DISENO_PREPROCESAMIENTO.md](docs/DISENO_PREPROCESAMIENTO.md).
+- **Índice de JSON en `config/datasets/` y comando con `--encoding-spec`:** [docs/CONFIG_DATASETS.md](docs/CONFIG_DATASETS.md).
+
+## EDA tras preprocesamiento (Fase D)
+
+- **Metodología y comparación antes/después:** [docs/EDA_POST_PREPROCESAMIENTO.md](docs/EDA_POST_PREPROCESAMIENTO.md).
+- **Plantilla de texto para el informe:** [docs/DATOS_TRAS_PREPROCESAMIENTO_PLANTILLA.md](docs/DATOS_TRAS_PREPROCESAMIENTO_PLANTILLA.md).
+
+## Modelado (Fase E): CV y cross-dataset
+
+- **Guía (incl. Google Colab):** [docs/FASE_E_PREPARACION.md](docs/FASE_E_PREPARACION.md).
+- **Ejecutar experimento:** copiar [config/experiment_train.example.yaml](config/experiment_train.example.yaml), ajustar rutas y columnas, luego:
+  - `python scripts/run_phase_e_cv.py --config config/mi_experimento.yaml`
+  - o `python -m modeling.train_runner --config ...` con `PYTHONPATH=src`.
+- **Salidas:** `reports/experiments/<experiment_name>/` (predicciones, matrices de confusión, `metrics_per_fold.csv`, `summary.json`).
+- **Baselines (E1):** plantilla [docs/BASELINES_LITERATURA_PLANTILLA.md](docs/BASELINES_LITERATURA_PLANTILLA.md).
+- **Columna de sujeto:** ver guía; usar `ensure_subject_unit_column` si hace falta.
 
 ## Sugerencias para estudiantes
 

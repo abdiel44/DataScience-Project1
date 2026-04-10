@@ -1,0 +1,26 @@
+# Dataset mínimo para smoke test (no usar en producción)
+experiment_name: _smoke_phase_e
+random_seed: 0
+train_csv: PLACEHOLDER
+cross_dataset: false
+eval_csv: null
+subject_column: subject_unit_id
+target_column: y
+task: multiclass
+feature_exclude: []
+feature_include: null
+cv:
+  n_splits: 2
+  stratify: true
+  shuffle: true
+output:
+  root: PLACEHOLDER_OUT
+models:
+  svm_rbf: false
+  random_forest: true
+  xgboost: false
+hyperparams:
+  random_forest:
+    n_estimators: 10
+    max_depth: 3
+    n_jobs: 1
