@@ -1,0 +1,193 @@
+{
+  "sleep_stage_intra_best_accuracy": "xgboost",
+  "sleep_stage_intra_best_macro_f1": "random_forest",
+  "mitbih_apnea_best_auc": "xgboost",
+  "mitbih_stage_best_accuracy": "xgboost",
+  "sleep_stage_mcnemar": {
+    "statistic": 1418.6066581231432,
+    "p_value": 1.324422553424e-312
+  },
+  "mitbih_stage_mcnemar": {
+    "statistic": 36.374363327674025,
+    "p_value": 1.4813688442223828e-09
+  },
+  "mitbih_apnea_mcnemar": {
+    "statistic": 8.14776357827476,
+    "p_value": 0.004292991207129787
+  },
+  "mitbih_apnea_auc_diff": {
+    "delta": -0.011460214475497055,
+    "ci_low": -0.016425358661242662,
+    "ci_high": -0.006243339733375604
+  },
+  "importance_files": {
+    "sleep_stage_xgboost": [
+      {
+        "feature": "eeg_bandpower_delta",
+        "importance": 0.18987062573432922
+      },
+      {
+        "feature": "eeg_zero_crossing_rate",
+        "importance": 0.141617089509964
+      },
+      {
+        "feature": "eeg_rel_power_alpha",
+        "importance": 0.12048301845788956
+      },
+      {
+        "feature": "eeg_bandpower_beta",
+        "importance": 0.10817643254995346
+      },
+      {
+        "feature": "eeg_rms",
+        "importance": 0.0569809153676033
+      },
+      {
+        "feature": "eeg_rel_power_theta",
+        "importance": 0.05405022203922272
+      },
+      {
+        "feature": "eeg_theta_alpha_ratio",
+        "importance": 0.0508955717086792
+      },
+      {
+        "feature": "eeg_rel_power_beta",
+        "importance": 0.04704725742340088
+      },
+      {
+        "feature": "eeg_var",
+        "importance": 0.04692269489169121
+      },
+      {
+        "feature": "eeg_spectral_entropy",
+        "importance": 0.044405654072761536
+      }
+    ],
+    "sleep_stage_random_forest": [
+      {
+        "feature": "eeg_zero_crossing_rate",
+        "importance": 0.13605540908755515
+      },
+      {
+        "feature": "eeg_bandpower_delta",
+        "importance": 0.11360391130919559
+      },
+      {
+        "feature": "eeg_rel_power_beta",
+        "importance": 0.08306795696486602
+      },
+      {
+        "feature": "eeg_spectral_entropy",
+        "importance": 0.07273296184747184
+      },
+      {
+        "feature": "eeg_rel_power_delta",
+        "importance": 0.06739516165659115
+      },
+      {
+        "feature": "eeg_bandpower_beta",
+        "importance": 0.06142340273578891
+      },
+      {
+        "feature": "eeg_rel_power_theta",
+        "importance": 0.060159806965345744
+      },
+      {
+        "feature": "eeg_theta_alpha_ratio",
+        "importance": 0.054840384532154764
+      },
+      {
+        "feature": "eeg_bandpower_theta",
+        "importance": 0.05405394338205487
+      },
+      {
+        "feature": "eeg_rel_power_alpha",
+        "importance": 0.05399715441396846
+      }
+    ],
+    "mitbih_apnea_xgboost": [
+      {
+        "feature": "eeg_theta_alpha_ratio",
+        "importance": 0.161147341132164
+      },
+      {
+        "feature": "eeg_rel_power_delta",
+        "importance": 0.10254044830799103
+      },
+      {
+        "feature": "eeg_bandpower_beta",
+        "importance": 0.0806916132569313
+      },
+      {
+        "feature": "eeg_kurtosis",
+        "importance": 0.05444687604904175
+      },
+      {
+        "feature": "eeg_rel_power_alpha",
+        "importance": 0.048877738416194916
+      },
+      {
+        "feature": "eeg_sef50",
+        "importance": 0.044021859765052795
+      },
+      {
+        "feature": "eeg_hjorth_mobility",
+        "importance": 0.04333316534757614
+      },
+      {
+        "feature": "eeg_var",
+        "importance": 0.04245145246386528
+      },
+      {
+        "feature": "eeg_rel_power_theta",
+        "importance": 0.04079592972993851
+      },
+      {
+        "feature": "eeg_sef95",
+        "importance": 0.037094131112098694
+      }
+    ],
+    "mitbih_stage_random_forest": [
+      {
+        "feature": "eeg_rel_power_beta",
+        "importance": 0.08216110719111529
+      },
+      {
+        "feature": "eeg_hjorth_mobility",
+        "importance": 0.07165048085243078
+      },
+      {
+        "feature": "eeg_bandpower_delta",
+        "importance": 0.06392681128141342
+      },
+      {
+        "feature": "eeg_theta_alpha_ratio",
+        "importance": 0.061291822604376496
+      },
+      {
+        "feature": "eeg_rel_power_delta",
+        "importance": 0.060901313959509186
+      },
+      {
+        "feature": "eeg_zero_crossing_rate",
+        "importance": 0.04966760148895607
+      },
+      {
+        "feature": "eeg_rel_power_alpha",
+        "importance": 0.04891891884589974
+      },
+      {
+        "feature": "eeg_sef95",
+        "importance": 0.04761254160941668
+      },
+      {
+        "feature": "eeg_mean",
+        "importance": 0.045472199546049336
+      },
+      {
+        "feature": "eeg_bandpower_beta",
+        "importance": 0.0449750655971164
+      }
+    ]
+  }
+}

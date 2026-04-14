@@ -1,0 +1,73 @@
+experiment_name: mitbih_apnea_binary_multitask
+random_seed: 42
+train_csv: data/processed/mitbih_apnea_binary_multitask.csv
+cross_dataset: false
+subject_column: subject_unit_id
+recording_column: recording_id
+task: multitask_apnea_stage
+
+cv:
+  n_splits: 5
+  stratify: true
+  shuffle: true
+
+dataset:
+  raw_root: Data-Set's
+  order_column: epoch_index
+  sequence_length: 9
+  sample_hz: 100
+  epoch_seconds: 30
+  normalize_each_epoch: true
+  max_recordings_in_memory: 2
+  dataset_dirnames:
+    mit_bih_psg: mit-bih-polysomnographic-database-1.0.0
+  signal_channels:
+    mit_bih_psg:
+      - EEG (C4-A1)
+      - EEG (O2-A1)
+      - EEG (C3-O1)
+
+labels:
+  stage_order: [W, N1, N2, N3, REM]
+
+model:
+  type: conformer
+  embedding_dim: 128
+  conformer_blocks: 2
+  attention_heads: 4
+  ffn_dim: 256
+  conv_kernel_size: 31
+  dropout: 0.1
+
+transfer:
+  enabled: true
+  checkpoint: reports/experiments/sleep_edf_expanded_multitask_pretrain/models/conformer_multitask_final.pt
+  freeze_encoder: false
+
+multitask:
+  apnea_loss_weight: 1.0
+  stage_loss_weight: 0.5
+
+train:
+  subject_fraction: 1.0
+  val_subject_fraction: 0.15
+  epochs: 20
+  batch_size: 8
+  num_workers: 0
+  lr: 0.0001
+  weight_decay: 0.01
+  mixed_precision: true
+  early_stopping_patience: 5
+
+augmentations:
+  enabled: true
+  gaussian_noise_std: 0.01
+
+device:
+  preferred: cuda
+
+output:
+  root: reports/experiments
+  save_models: true
+  save_fold_models: true
+  save_final_model: true

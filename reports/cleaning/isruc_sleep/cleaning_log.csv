@@ -1,0 +1,8 @@
+metric,value,detail
+input_rows,22320,
+output_rows,22320,
+removed_empty_rows,0,
+removed_duplicates,0,full row duplicate
+removed_target_missing_rows,0,
+string_normalized,event_group,
+string_normalized,eeg_channel,

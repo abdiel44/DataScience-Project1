@@ -1,0 +1,7 @@
+metric,value,detail
+input_rows,1080,
+output_rows,1080,
+removed_empty_rows,0,
+removed_duplicates,0,full row duplicate
+removed_target_missing_rows,0,
+string_normalized,sleep_stage,

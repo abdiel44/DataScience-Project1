@@ -1,0 +1,167 @@
+column,category,frequency,proportion_pct
+aux_raw,W,2441,28.236
+aux_raw,2,1343,15.535
+aux_raw,2 X,728,8.4211
+aux_raw,2 OA,494,5.7143
+aux_raw,1 X,493,5.7027
+aux_raw,1,490,5.668
+aux_raw,R,317,3.6669
+aux_raw,1 HA,285,3.2967
+aux_raw,2 HA,252,2.915
+aux_raw,3,235,2.7183
+aux_raw,W X,117,1.3534
+aux_raw,2 H,117,1.3534
+aux_raw,W HA,116,1.3418
+aux_raw,2 LA,80,0.9254
+aux_raw,1 CAA,80,0.9254
+aux_raw,2 L,78,0.9023
+aux_raw,3 L,77,0.8907
+aux_raw,R X,58,0.6709
+aux_raw,R H,53,0.6131
+aux_raw,W CAA,48,0.5552
+aux_raw,2 X X,45,0.5205
+aux_raw,1 OA,45,0.5205
+aux_raw,1 H,41,0.4743
+aux_raw,4,37,0.428
+aux_raw,3 X,34,0.3933
+aux_raw,R HA,30,0.347
+aux_raw,3 LA,30,0.347
+aux_raw,4 L,26,0.3008
+aux_raw,R OA,25,0.2892
+aux_raw,2 CA,23,0.266
+aux_raw,4 LA,22,0.2545
+aux_raw,2 CAA,21,0.2429
+aux_raw,1 CA,20,0.2313
+aux_raw,R L,16,0.1851
+aux_raw,2 OA OA,15,0.1735
+aux_raw,1 X X,15,0.1735
+aux_raw,4 LA LA,14,0.1619
+aux_raw,2 A,13,0.1504
+aux_raw,1 HA HA,11,0.1272
+aux_raw,4 X,10,0.1157
+aux_raw,W OA,9,0.1041
+aux_raw,3 H,9,0.1041
+aux_raw,3 LA LA,8,0.0925
+aux_raw,1 L,6,0.0694
+aux_raw,2 X L,6,0.0694
+aux_raw,4 L L,6,0.0694
+aux_raw,3 HA,6,0.0694
+aux_raw,W L,6,0.0694
+aux_raw,W CA,5,0.0578
+aux_raw,R A,5,0.0578
+aux_raw,2 L L,5,0.0578
+aux_raw,W HA X,4,0.0463
+aux_raw,4 L LA,4,0.0463
+aux_raw,1 CAA CAA,4,0.0463
+aux_raw,W CAA L,4,0.0463
+aux_raw,3 OA,4,0.0463
+aux_raw,2 HA H,4,0.0463
+aux_raw,1 L L,4,0.0463
+aux_raw,2 L A,4,0.0463
+aux_raw,2 HA HA,4,0.0463
+aux_raw,2 H LA,4,0.0463
+aux_raw,2 L LA,4,0.0463
+aux_raw,2 LA LA,4,0.0463
+aux_raw,W LA,4,0.0463
+aux_raw,1 A,4,0.0463
+aux_raw,1 HA X,4,0.0463
+aux_raw,W X X,4,0.0463
+aux_raw,3 L LA,3,0.0347
+aux_raw,R LA,3,0.0347
+aux_raw,1 LA,3,0.0347
+aux_raw,2 H H,3,0.0347
+aux_raw,1 H H,3,0.0347
+aux_raw,2 L X,3,0.0347
+aux_raw,1 HA CAA,3,0.0347
+aux_raw,R CA,3,0.0347
+aux_raw,W H,3,0.0347
+aux_raw,2 LA HA,2,0.0231
+aux_raw,2 LA H,2,0.0231
+aux_raw,4 L L L,2,0.0231
+aux_raw,2 LA L,2,0.0231
+aux_raw,3 H H,2,0.0231
+aux_raw,3 A,2,0.0231
+aux_raw,W CAA HA,2,0.0231
+aux_raw,1 CAA HA,2,0.0231
+aux_raw,2 OA L,2,0.0231
+aux_raw,1 X L,2,0.0231
+aux_raw,W X CAA,2,0.0231
+aux_raw,R LL,2,0.0231
+aux_raw,4 H L,2,0.0231
+aux_raw,1 H X,2,0.0231
+aux_raw,R CAA,2,0.0231
+aux_raw,1 X H,2,0.0231
+aux_raw,R X X,2,0.0231
+aux_raw,R X H,2,0.0231
+aux_raw,R X OA,2,0.0231
+aux_raw,1 HA H,2,0.0231
+aux_raw,4 LA HA LA,1,0.0116
+aux_raw,3 H LA,1,0.0116
+aux_raw,2 X H,1,0.0116
+aux_raw,2 HA X,1,0.0116
+aux_raw,R X CA,1,0.0116
+aux_raw,R H X,1,0.0116
+aux_raw,3 L HA LA,1,0.0116
+aux_raw,2 H HA,1,0.0116
+aux_raw,4 LA L,1,0.0116
+aux_raw,2 L HA,1,0.0116
+aux_raw,3 L L,1,0.0116
+aux_raw,3 LA L,1,0.0116
+aux_raw,1 A X,1,0.0116
+aux_raw,R L H,1,0.0116
+aux_raw,2 X A,1,0.0116
+aux_raw,R H CA,1,0.0116
+aux_raw,2 X OA,1,0.0116
+aux_raw,1 OA OA,1,0.0116
+aux_raw,2 L OA,1,0.0116
+aux_raw,R LLLL LLL,1,0.0116
+aux_raw,1 HA CA,1,0.0116
+aux_raw,W HA HA,1,0.0116
+aux_raw,2 A A A,1,0.0116
+aux_raw,1 CAA X,1,0.0116
+aux_raw,R H HA,1,0.0116
+aux_raw,3 H CA,1,0.0116
+aux_raw,3 LL H,1,0.0116
+aux_raw,R CAA L,1,0.0116
+aux_raw,1 HA L,1,0.0116
+aux_raw,R L CAA,1,0.0116
+aux_raw,1 LA LA,1,0.0116
+aux_raw,1 LA X,1,0.0116
+aux_raw,4 CAA,1,0.0116
+aux_raw,4 CA,1,0.0116
+aux_raw,4 LL,1,0.0116
+aux_raw,4 L H,1,0.0116
+aux_raw,2 L H,1,0.0116
+aux_raw,R L LA,1,0.0116
+aux_raw,1 OA X,1,0.0116
+aux_raw,W CAA CAA,1,0.0116
+aux_raw,2 LL,1,0.0116
+aux_raw,3 X LA,1,0.0116
+aux_raw,2 H L,1,0.0116
+aux_raw,3 X L,1,0.0116
+aux_raw,3 CAA,1,0.0116
+aux_raw,1 H HA,1,0.0116
+aux_raw,2 HA L,1,0.0116
+aux_raw,1 CAA CAA L,1,0.0116
+record_id,slp48,759,8.7796
+record_id,slp04,720,8.3285
+record_id,slp61,720,8.3285
+record_id,slp03,720,8.3285
+record_id,slp14,713,8.2475
+record_id,slp60,710,8.2128
+record_id,slp37,698,8.074
+record_id,slp16,694,8.0278
+record_id,slp32,640,7.4031
+record_id,slp59,458,5.2979
+record_id,slp66,439,5.0781
+record_id,slp01b,360,4.1643
+record_id,slp02a,352,4.0717
+record_id,slp02b,269,3.1116
+record_id,slp01a,239,2.7646
+record_id,slp67x,154,1.7814
+sleep_stage,2,3270,37.8253
+sleep_stage,w,2767,32.0069
+sleep_stage,1,1531,17.7097
+sleep_stage,r,529,6.1191
+sleep_stage,3,419,4.8467
+sleep_stage,4,129,1.4922

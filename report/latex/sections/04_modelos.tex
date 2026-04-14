@@ -1,0 +1,27 @@
+\section{Modelos base y protocolo experimental}
+
+La l\'inea principal del informe usa tres familias cl\'asicas ya presentes en el repositorio: \textbf{SVM-RBF}, \textbf{Random Forest} y \textbf{XGBoost}. En lugar de un estimador multi-output, el pipeline multitarget usa \textbf{dos modelos por algoritmo}: uno para \texttt{sleep\_stage} y otro para \texttt{apnea\_binary}. Ambos comparten exactamente la misma tabla, el mismo subconjunto de \feature{eeg\_*}, las mismas ventanas y los mismos folds \emph{subject-wise}. Esa decisi\'on simplifica la justificaci\'on metodol\'ogica y evita errores de implementaci\'on al mezclar targets con naturalezas distintas.
+
+\subsection{SVM-RBF}
+
+El modelo SVM usa kernel radial y se ajusta sobre variables estandarizadas. La b\'usqueda de hiperpar\'ametros explor\'o al menos \(C \in \{0.1, 1, 10\}\) y \(\gamma \in \{\texttt{scale}, 0.01, 0.1\}\). Se mantuvo \texttt{class\_weight=balanced} para compensar desbalance sin alterar el conjunto de entrenamiento con re-muestreo externo. Esta familia sirve como baseline importante porque castiga la mala normalizaci\'on y permite probar si la frontera no lineal sobre un espacio tabular compacto es suficiente para separar estadios o eventos respiratorios.
+
+\subsection{Random Forest}
+
+Random Forest se entren\'o con validaci\'on anidada sobre \texttt{n\_estimators}, \texttt{max\_depth} y \texttt{min\_samples\_leaf}. La familia de \'arboles es especialmente valiosa por dos razones. Primero, tolera relaciones no lineales y mezcla de escalas con menor sensibilidad a la normalizaci\'on. Segundo, entrega importancias de variables directamente interpretables, requisito expl\'icito del laboratorio para conectar el modelo con biomarcadores fisiol\'ogicos.
+
+\subsection{XGBoost}
+
+XGBoost fue la variante de \emph{boosting} elegida para el cuerpo principal. Su espacio de b\'usqueda incluy\'o \texttt{n\_estimators}, \texttt{max\_depth}, \texttt{learning\_rate}, \texttt{subsample} y \texttt{colsample\_bytree}. Se us\'o \texttt{tree\_method=hist} para mantener tiempos razonables. Esta familia es el candidato m\'as fuerte para capturar interacciones de segundo orden entre \feature{eeg\_*}, especialmente cuando la separaci\'on entre N1 y N2 o entre ventanas con/sin evento respiratorio depende de patrones espectrales sutiles.
+
+\subsection{Validaci\'on y m\'etricas}
+
+Todos los experimentos intra-dataset usan particiones \emph{subject-wise}. Para staging puro (\expname{sleep_edf_expanded_tuned}) se emple\'o validaci\'on cruzada de 5 folds. Para MIT-BIH multitarget se us\'o igualmente un esquema de 5 folds, con una estrategia compartida a nivel sujeto que combina tasa de apnea por sujeto y estadio dominante para aproximar balance simult\'aneo entre targets. Ning\'un sujeto aparece a la vez en entrenamiento y prueba dentro del mismo fold.
+
+En los experimentos \emph{cross-dataset}, el modelo se entrena en un corpus fuente y se eval\'ua directamente en el corpus destino \textbf{sin reajustar hiperpar\'ametros con datos del destino}. Las m\'etricas reportadas siguen el enunciado del curso:
+\begin{itemize}[leftmargin=*]
+\item Para staging: \emph{accuracy}, \emph{macro-F1} y \emph{kappa} de Cohen.
+\item Para apnea: \emph{accuracy}, sensibilidad, especificidad y AUC-ROC.
+\end{itemize}
+
+Adicionalmente, antes de redactar la discusi\'on final se calcularon intervalos de confianza bootstrap, pruebas exactas de McNemar y una diferencia bootstrap pareada de AUC para apnea. Este bloque estad\'istico es clave para no confundir mejoras aparentes con ventajas metodol\'ogicamente defendibles.

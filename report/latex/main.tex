@@ -1,0 +1,62 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,english]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{url}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\graphicspath{{generated/figures/}}
+\urlstyle{same}
+
+\newcommand{\expname}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\feature}[1]{\texttt{\detokenize{#1}}}
+
+\title{Clasificaci\'on de etapas de sue\~no y detecci\'on de apnea con EEG monocanal:\\
+una evaluaci\'on cl\'asica subject-wise y cross-dataset}
+
+\author{
+\IEEEauthorblockN{Nombre del Estudiante 1, Nombre del Estudiante 2}
+\IEEEauthorblockA{
+Ciencia de Datos\\
+Universidad Interamericana de Puerto Rico, Recinto de Bayam\'on\\
+Bayam\'on, Puerto Rico\\
+Abril de 2026
+}
+}
+
+\begin{document}
+
+\maketitle
+
+\input{sections/00_resumen}
+\input{sections/01_introduccion}
+\input{sections/02_literatura}
+\input{sections/03_datasets_preprocesamiento}
+\input{sections/04_modelos}
+\input{sections/05_resultados}
+\input{sections/06_discusion}
+\input{sections/07_propuesta}
+\input{sections/08_conclusiones}
+
+\appendices
+\input{sections/09_apendice}
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

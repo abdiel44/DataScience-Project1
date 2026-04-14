@@ -1,0 +1,11 @@
+column,dtype,non_null_count,missing_count,missing_pct,n_unique
+n_epochs,float64,25,0,0.0,25
+recording_id,object,25,0,0.0,25
+stage_0_frac,float64,25,0,0.0,25
+stage_1_frac,float64,25,0,0.0,25
+stage_2_frac,float64,25,0,0.0,25
+stage_3_frac,float64,25,0,0.0,25
+stage_4_frac,float64,25,0,0.0,25
+stage_5_frac,float64,25,0,0.0,24
+stage_median,float64,25,0,0.0,3
+stage_mode,int64,25,0,0.0,5

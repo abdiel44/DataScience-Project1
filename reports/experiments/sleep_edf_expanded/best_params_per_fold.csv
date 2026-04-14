@@ -1,0 +1,13 @@
+model,fold,training_mode,inner_best_score,selected_params_json
+random_forest,0,fixed,,"{""class_weight"": ""balanced"", ""max_depth"": null, ""n_estimators"": 200, ""n_jobs"": -1}"
+random_forest,1,fixed,,"{""class_weight"": ""balanced"", ""max_depth"": null, ""n_estimators"": 200, ""n_jobs"": -1}"
+random_forest,2,fixed,,"{""class_weight"": ""balanced"", ""max_depth"": null, ""n_estimators"": 200, ""n_jobs"": -1}"
+random_forest,3,fixed,,"{""class_weight"": ""balanced"", ""max_depth"": null, ""n_estimators"": 200, ""n_jobs"": -1}"
+random_forest,4,fixed,,"{""class_weight"": ""balanced"", ""max_depth"": null, ""n_estimators"": 200, ""n_jobs"": -1}"
+random_forest,final,fixed,,"{""class_weight"": ""balanced"", ""max_depth"": null, ""n_estimators"": 200, ""n_jobs"": -1}"
+xgboost,0,fixed,,"{""learning_rate"": 0.1, ""max_depth"": 4, ""n_estimators"": 150, ""n_jobs"": -1, ""tree_method"": ""hist""}"
+xgboost,1,fixed,,"{""learning_rate"": 0.1, ""max_depth"": 4, ""n_estimators"": 150, ""n_jobs"": -1, ""tree_method"": ""hist""}"
+xgboost,2,fixed,,"{""learning_rate"": 0.1, ""max_depth"": 4, ""n_estimators"": 150, ""n_jobs"": -1, ""tree_method"": ""hist""}"
+xgboost,3,fixed,,"{""learning_rate"": 0.1, ""max_depth"": 4, ""n_estimators"": 150, ""n_jobs"": -1, ""tree_method"": ""hist""}"
+xgboost,4,fixed,,"{""learning_rate"": 0.1, ""max_depth"": 4, ""n_estimators"": 150, ""n_jobs"": -1, ""tree_method"": ""hist""}"
+xgboost,final,fixed,,"{""learning_rate"": 0.1, ""max_depth"": 4, ""n_estimators"": 150, ""n_jobs"": -1, ""tree_method"": ""hist""}"

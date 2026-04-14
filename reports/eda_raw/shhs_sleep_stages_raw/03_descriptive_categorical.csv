@@ -1,0 +1,6 @@
+column,category,frequency,proportion_pct
+sleep_stage,2,408,37.7778
+sleep_stage,3,238,22.037
+sleep_stage,W,215,19.9074
+sleep_stage,R,196,18.1481
+sleep_stage,1,23,2.1296

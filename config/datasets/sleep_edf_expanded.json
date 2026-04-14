@@ -1,11 +1,23 @@
 {
-  "description": "Sleep-EDF Expanded: CSV propio tras export desde EDF/hypnogram (p. ej. con mne). Ajustar nominal_columns y target_column a los nombres reales del archivo.",
+  "description": "Sleep-EDF Expanded epoch-level export from paired PSG/hypnogram EDF files with AASM sleep_stage and generic monocanal eeg_* features.",
   "target_column": "sleep_stage",
   "nominal_columns": ["sleep_stage"],
   "ordinal_columns": {},
   "binary_columns": [],
   "numeric_scaling": "standardize",
-  "scale_exclude": ["subject_id", "recording_id"],
+  "scale_exclude": [
+    "recording_id",
+    "subject_id",
+    "epoch_index",
+    "epoch_start_sample",
+    "epoch_end_sample",
+    "epoch_start_sec",
+    "epoch_end_sec",
+    "sfreq_hz",
+    "source_file",
+    "hypnogram_file",
+    "eeg_channel"
+  ],
   "class_balance_method": "none",
   "dimensionality_method": "none"
 }

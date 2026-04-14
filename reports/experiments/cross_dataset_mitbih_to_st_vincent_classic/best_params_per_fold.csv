@@ -1,0 +1,7 @@
+model,task_name,fold,training_mode,inner_best_score,selected_params_json
+random_forest,stage,cross_eval,tuned,0.4071787621487078,"{""class_weight"": ""balanced"", ""max_depth"": null, ""min_samples_leaf"": 5, ""n_estimators"": 200, ""n_jobs"": -1}"
+random_forest,apnea,cross_eval,tuned,0.677879611886632,"{""class_weight"": ""balanced"", ""max_depth"": 10, ""min_samples_leaf"": 1, ""n_estimators"": 200, ""n_jobs"": -1}"
+xgboost,stage,cross_eval,tuned,0.3984249938701147,"{""colsample_bytree"": 1.0, ""learning_rate"": 0.1, ""max_depth"": 3, ""n_estimators"": 150, ""n_jobs"": -1, ""scale_pos_weight"": 1.0, ""subsample"": 0.8, ""tree_method"": ""hist""}"
+xgboost,apnea,cross_eval,tuned,0.6917182327870549,"{""colsample_bytree"": 0.8, ""learning_rate"": 0.03, ""max_depth"": 3, ""n_estimators"": 150, ""n_jobs"": -1, ""scale_pos_weight"": 1.0, ""subsample"": 0.8, ""tree_method"": ""hist""}"
+svm_rbf,stage,cross_eval,tuned,0.3729524565812279,"{""C"": 1, ""class_weight"": ""balanced"", ""gamma"": ""scale""}"
+svm_rbf,apnea,cross_eval,tuned,0.5813355376421466,"{""C"": 10, ""class_weight"": ""balanced"", ""gamma"": ""scale""}"

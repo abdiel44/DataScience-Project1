@@ -1,17 +1,19 @@
-"""Save predictions and figures for Phase E3 (CSV + PNG)."""
+"""Save predictions, figures, and model bundles for Phase E."""
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
-from typing import Any, Optional, Sequence, Union
+from typing import Any, Mapping, Optional, Sequence, Union
 
+import joblib
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
+from sklearn.metrics import ConfusionMatrixDisplay, RocCurveDisplay, confusion_matrix, roc_curve
 
 
 def save_predictions_dataframe(
@@ -70,4 +72,47 @@ def save_confusion_matrix_figure(
         ax.set_title(title)
     fig.savefig(out, bbox_inches="tight", dpi=150)
     plt.close(fig)
+    return out
+
+
+def save_roc_curve_figure(
+    y_true: Sequence[Any],
+    y_score: Sequence[float],
+    path: Union[str, Path],
+    *,
+    title: Optional[str] = None,
+) -> Path:
+    """Save binary ROC curve PNG when positive-class scores are available."""
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    yt = np.asarray(y_true)
+    ys = np.asarray(y_score, dtype=float)
+    fig, ax = plt.subplots(figsize=(6, 5))
+    if len(np.unique(yt)) >= 2:
+        fpr, tpr, _ = roc_curve(yt, ys)
+        RocCurveDisplay(fpr=fpr, tpr=tpr).plot(ax=ax)
+    else:
+        ax.plot([0, 1], [0, 1], linestyle="--", color="gray")
+        ax.text(0.5, 0.5, "single-class y_true", ha="center", va="center")
+    if title:
+        ax.set_title(title)
+    fig.savefig(out, bbox_inches="tight", dpi=150)
+    plt.close(fig)
+    return out
+
+
+def save_model_bundle(path: Union[str, Path], bundle: Mapping[str, Any]) -> Path:
+    """Persist a fitted model bundle for later reuse."""
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    joblib.dump(dict(bundle), out)
+    return out
+
+
+def write_model_registry(path: Union[str, Path], rows: Sequence[Mapping[str, Any]]) -> Path:
+    """Persist a JSON manifest for saved model artifacts."""
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    with out.open("w", encoding="utf-8") as f:
+        json.dump(list(rows), f, indent=2, default=str)
     return out

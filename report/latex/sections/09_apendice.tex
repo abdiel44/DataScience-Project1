@@ -1,0 +1,54 @@
+\section{Comandos de ejecuci\'on}
+
+La bater\'ia final del informe se reproduce con los siguientes comandos, asumiendo el entorno virtual activado en la ra\'iz del repositorio:
+
+\begin{itemize}[leftmargin=*]
+\item \texttt{python scripts/run\_phase\_e\_cv.py}\\
+\texttt{\ \ --config config/experiments/sleep\_edf\_expanded\_tuned.yaml}
+\item \texttt{python scripts/run\_phase\_e\_cv.py}\\
+\texttt{\ \ --config config/experiments/cross\_sleep\_edf\_to\_isruc\_n123.yaml}
+\item \texttt{python scripts/run\_phase\_e\_cv.py}\\
+\texttt{\ \ --config config/experiments/cross\_isruc\_to\_sleep\_edf\_n123.yaml}
+\item \texttt{python scripts/run\_phase\_e\_classic\_multitarget.py}\\
+\texttt{\ \ --config config/experiments/mitbih\_apnea\_stage\_classic.yaml}
+\item \texttt{python scripts/run\_phase\_e\_classic\_multitarget.py}\\
+\texttt{\ \ --config config/experiments/cross\_dataset\_mitbih\_to\_st\_vincent\_classic.yaml}
+\item \texttt{python scripts/run\_phase\_e\_classic\_multitarget.py}\\
+\texttt{\ \ --config config/experiments/cross\_dataset\_st\_vincent\_to\_mitbih\_classic.yaml}
+\end{itemize}
+
+Para construir el informe:
+
+\begin{itemize}[leftmargin=*]
+\item \texttt{python scripts/build\_latex\_report\_assets.py}
+\item \texttt{cd report/latex}
+\item \texttt{pdflatex --disable-installer -interaction=nonstopmode -halt-on-error main.tex}
+\item \texttt{bibtex main}
+\item \texttt{pdflatex --disable-installer -interaction=nonstopmode -halt-on-error main.tex}
+\item \texttt{pdflatex --disable-installer -interaction=nonstopmode -halt-on-error main.tex}
+\end{itemize}
+
+Tambi\'en se dej\'o un script de conveniencia en \texttt{report/latex/build\_report.ps1}.
+
+\section{Uso de herramientas de IA}
+
+Durante el proyecto se utilizaron herramientas de IA para tres tareas: (1) exploraci\'on y depuraci\'on de c\'odigo, (2) apoyo en la estructuraci\'on del informe y (3) apoyo en la s\'intesis inicial de literatura. Todo resultado incluido en el informe fue verificado manualmente contra archivos reales del repositorio o contra PDFs/fuentes bibliogr\'aficas consultadas.
+
+\begin{table}[h]
+\centering
+\caption{Uso declarado de herramientas de IA.}
+\label{tab:ai_use}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lll}
+\toprule
+Herramienta & Uso principal & Verificaci\'on manual \\
+\midrule
+Codex / GPT-5.4 & C\'odigo, refactor, LaTeX & S\'i \\
+ChatGPT/Codex & Redacci\'on y s\'intesis & S\'i \\
+PDF local / revisi\'on manual & Literatura base & S\'i \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+No se incluyeron referencias inventadas, m\'etricas no ejecutadas ni figuras no trazables a artefactos del proyecto.

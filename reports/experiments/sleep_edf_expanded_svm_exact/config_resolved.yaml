@@ -1,0 +1,77 @@
+experiment_name: sleep_edf_expanded_svm_exact
+random_seed: 42
+train_csv: data/processed/sleep_edf_expanded_prep.parquet
+cross_dataset: false
+eval_csv: null
+subject_column: subject_id
+target_column: sleep_stage
+task: multiclass
+feature_exclude:
+- recording_id
+- epoch_index
+- epoch_start_sample
+- epoch_end_sample
+- epoch_start_sec
+- epoch_end_sec
+- source_file
+- hypnogram_file
+- eeg_channel
+- sfreq_hz
+feature_include:
+- eeg_mean
+- eeg_std
+- eeg_var
+- eeg_rms
+- eeg_zero_crossing_rate
+- eeg_bandpower_delta
+- eeg_bandpower_theta
+- eeg_bandpower_alpha
+- eeg_bandpower_beta
+- eeg_rel_power_delta
+- eeg_rel_power_theta
+- eeg_rel_power_alpha
+- eeg_rel_power_beta
+- eeg_theta_alpha_ratio
+- eeg_spectral_entropy
+cv:
+  n_splits: 5
+  stratify: true
+  shuffle: true
+tuning:
+  enabled: true
+  mode: nested_cv
+  inner_cv_splits: 3
+  scoring: macro_f1
+  search_method: grid
+  train_subject_subsample:
+    enabled: true
+    fraction: 0.25
+    min_subjects: 32
+  search_space:
+    svm_rbf:
+      C:
+      - 0.5
+      - 1.0
+      - 2.0
+      gamma:
+      - scale
+      - 0.01
+output:
+  root: reports/experiments
+  save_models: true
+  save_fold_models: true
+  save_final_model: true
+  resume_completed: true
+models:
+  svm_rbf: true
+  random_forest: false
+  xgboost: false
+hyperparams:
+  svm_rbf:
+    C: 1.0
+    gamma: scale
+    class_weight: balanced
+    cache_size: 2048
+    tol: 0.01
+    shrinking: true
+    max_iter: -1

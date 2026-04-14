@@ -1,0 +1,102 @@
+# Sleep-EDF 2013 comparable tuned experiment with nested CV.
+
+experiment_name: sleep_edf_2013_fpzcz_tuned
+random_seed: 42
+train_csv: data/processed/sleep_edf_2013_fpzcz_prep.parquet
+cross_dataset: false
+eval_csv: null
+
+subject_column: subject_id
+target_column: sleep_stage
+task: multiclass
+
+feature_exclude:
+  - recording_id
+  - epoch_index
+  - epoch_start_sample
+  - epoch_end_sample
+  - epoch_start_sec
+  - epoch_end_sec
+  - source_file
+  - hypnogram_file
+  - eeg_channel
+  - sfreq_hz
+  - recording_epochs_before_trim
+  - recording_epochs_after_trim
+  - wake_trim_minutes
+
+cv:
+  n_splits: 5
+  stratify: true
+  shuffle: true
+
+tuning:
+  enabled: true
+  mode: nested_cv
+  inner_cv_splits: 3
+  scoring: macro_f1
+  search_method: grid
+  train_subject_subsample:
+    enabled: true
+    fraction: 0.25
+    min_subjects: 32
+  search_space:
+    svm_rbf:
+      C: [0.5, 1.0, 2.0]
+      gamma: [scale, 0.01]
+    random_forest:
+      n_estimators: [200, 400]
+      max_depth: [null, 10, 20]
+      min_samples_leaf: [1, 5]
+    xgboost:
+      n_estimators: [150, 300]
+      max_depth: [3, 5, 7]
+      learning_rate: [0.03, 0.1]
+      subsample: [0.8, 1.0]
+      colsample_bytree: [0.8, 1.0]
+
+train_resampling:
+  enabled: true
+  method: smote_to_reference_minus
+  reference_class: N2
+  reference_offset: 7000
+  target_labels: [W, N1, N3, REM]
+  k_neighbors: 5
+  random_state: 42
+
+output:
+  root: reports/experiments
+  save_models: true
+  save_fold_models: true
+  save_final_model: true
+  resume_completed: true
+
+models:
+  svm_rbf: true
+  random_forest: true
+  xgboost: true
+
+hyperparams:
+  svm_rbf:
+    C: 1.0
+    gamma: scale
+    class_weight: balanced
+    cache_size: 2048
+    tol: 0.01
+    shrinking: true
+    max_iter: -1
+  random_forest:
+    n_estimators: 300
+    max_depth: null
+    min_samples_leaf: 1
+    n_jobs: -1
+    class_weight: balanced
+  xgboost:
+    n_estimators: 200
+    max_depth: 5
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    n_jobs: -1
+    tree_method: hist
+    class_weight: balanced

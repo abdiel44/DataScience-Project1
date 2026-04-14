@@ -1,0 +1,7 @@
+metric,value,detail
+input_rows,25,
+output_rows,25,
+removed_empty_rows,0,
+removed_duplicates,0,full row duplicate
+removed_target_missing_rows,0,
+string_normalized,recording_id,

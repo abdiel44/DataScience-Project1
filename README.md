@@ -75,6 +75,7 @@ python src/main.py --input data/raw/profesor_dataset.csv --output data/processed
 Además de limpiar el dataset, el pipeline puede ejecutar una etapa de EDA que genera tablas, figuras y un resumen en Markdown para tu informe.
 
 - **Fase B (datos brutos / tabular exportado):** [`scripts/raw_eda.py`](scripts/raw_eda.py) lee un CSV, normaliza nombres de columnas a snake_case y escribe en `reports/eda_raw/<task>/` **sin** pasar por limpieza, codificación ni escalado de `main.py`. Úsalo para caracterizar exports WFDB→CSV u otras tablas antes del preprocesamiento completo (ver [docs/EDA_METODOLOGIA.md](docs/EDA_METODOLOGIA.md)).
+- **Exportar tabla raw desde loaders `--source`:** [`scripts/export_source_raw.py`](scripts/export_source_raw.py) materializa un CSV tabular inicial para ISRUC, St. Vincent, Sleep-EDF u otras fuentes soportadas antes de pasar por `raw_eda.py` o por `main.py`.
 - **Tras el pipeline de `main.py`:** con `--run-eda`, el EDA corre por defecto sobre el dataframe **solo limpio** (sin codificar ni escalar); la salida va a `--eda-outdir` o `reports/eda/<task>/`.
 - **Fase D (datos ya preprocesados):** usa `--run-eda` junto con **`--run-eda-processed`** para analizar la tabla **final** (tras encoding, balanceo, escalado, dimensionalidad). Salida por defecto: `reports/eda_processed/<task>/`. Detalle: [docs/EDA_POST_PREPROCESAMIENTO.md](docs/EDA_POST_PREPROCESAMIENTO.md).
 
@@ -189,4 +190,23 @@ Por defecto se excluyen pruebas marcadas `slow`. Para incluir el smoke de Fase E
 - Separar etapas: limpieza, features, entrenamiento, evaluación
 - Versionar código, no datasets pesados
 - Documentar decisiones y supuestos
+
+## Runner multitarget clÃ¡sico
+
+- `python scripts/run_phase_e_classic_multitarget.py --config config/experiments/mitbih_apnea_stage_classic.yaml`
+- `python scripts/run_phase_e_classic_multitarget.py --config config/experiments/cross_dataset_mitbih_to_st_vincent_classic.yaml`
+- `python scripts/run_phase_e_classic_multitarget.py --config config/experiments/cross_dataset_st_vincent_to_mitbih_classic.yaml`
+
+## Informe final en LaTeX
+
+- **RaÃ­z del informe:** [report/latex/main.tex](report/latex/main.tex)
+- **GeneraciÃ³n de assets desde experimentos reales:** `python scripts/build_latex_report_assets.py`
+- **CompilaciÃ³n manual del PDF:**
+  - `cd report/latex`
+  - `pdflatex --disable-installer -interaction=nonstopmode -halt-on-error main.tex`
+  - `bibtex main`
+  - `pdflatex --disable-installer -interaction=nonstopmode -halt-on-error main.tex`
+  - `pdflatex --disable-installer -interaction=nonstopmode -halt-on-error main.tex`
+- **Script de conveniencia (PowerShell):** `.\report\latex\build_report.ps1`
+- **Salida esperada:** `report/latex/main.pdf`
 

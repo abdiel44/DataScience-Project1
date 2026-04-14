@@ -1,0 +1,19 @@
+\begin{table*}[t]
+\centering
+\caption{Trabajos de literatura que guiaron el preprocesamiento y la selecci\'on de \emph{features}.}
+\label{tab:literature_preprocessing}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllll}
+\toprule
+Referencia & Canal / se\~nal & Segmentaci\'on & Rasgos metodol\'ogicos principales & Relevancia para este trabajo \\
+\midrule
+\cite{mousavi2019sleepeegnet} & EEG monocanal (Sleep-EDF) & 30 s + contexto secuencial & Representaci\'on tiempo-frecuencia y contexto entre \'epocas & Justifica usar contexto y explica por qu\'e N1 mejora con dependencia temporal \\
+\cite{barnes2022apneaeegcnn} & EEG monocanal & Ventanas respiratorias / EEG & Importancia de bandas delta y beta para apnea & Sustenta la selecci\'on de \feature{eeg\_bandpower\_*} y potencias relativas para apnea \\
+\cite{gao2023psdrf} & EEG monocanal/dual & 30 s & PSD de ondas caracter\'isticas + Random Forest & Baseline m\'as cercano a nuestra l\'inea cl\'asica de staging \\
+\cite{nakamura2017complexity} & EEG monocanal & 30 s con vecinos temporales & Entrop\'ias multiescala + SEF + SVM & Motiv\'o incluir entrop\'ias y SEF en la l\'inea multitarget \\
+\cite{ghimatgar2019hmm} & EEG monocanal & 30 s & HMM sobre rasgos EEG & Sirve como referencia secuencial no implementada \\
+\cite{li2022cascadedsvm} & EEG monocanal & 30 s & SVM en cascada y normalizaci\'on cuidadosa & Relevante para interpretar el papel de SVM en nuestro baseline \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

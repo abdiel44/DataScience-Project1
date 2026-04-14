@@ -1,0 +1,16 @@
+\begin{table*}[t]
+\centering
+\caption{Pruebas pareadas: McNemar exacto y diferencia bootstrap de AUC.}
+\label{tab:stat_tests}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llccc}
+\toprule
+Escenario & Comparacion & McNemar & p-value & Delta AUC \\
+\midrule
+Sleep-EDF staging & XGBoost vs Random Forest & 1418.607 & 0.0000 & N/A \\
+MIT-BIH staging & XGBoost vs Random Forest & 36.374 & 0.0000 & N/A \\
+MIT-BIH apnea & XGBoost vs Random Forest & 8.148 & 0.0043 & -0.011 [-0.016, -0.006] \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

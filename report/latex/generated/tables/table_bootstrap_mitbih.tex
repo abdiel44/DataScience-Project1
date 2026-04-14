@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\caption{Intervalos de confianza bootstrap para MIT-BIH en apnea (AUC) y staging (accuracy).}
+\label{tab:bootstrap_mitbih}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcc}
+\toprule
+Modelo & Apnea AUC-ROC & Stage Accuracy \\
+\midrule
+SVM-RBF & 0.600 [0.548, 0.655] & 0.496 [0.446, 0.567] \\
+Random Forest & 0.632 [0.571, 0.685] & 0.585 [0.537, 0.634] \\
+XGBoost & 0.640 [0.609, 0.675] & 0.608 [0.576, 0.640] \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}

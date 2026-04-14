@@ -1,0 +1,11 @@
+feature,importance
+eeg_rel_power_beta,0.08216110719111529
+eeg_hjorth_mobility,0.07165048085243078
+eeg_bandpower_delta,0.06392681128141342
+eeg_theta_alpha_ratio,0.061291822604376496
+eeg_rel_power_delta,0.060901313959509186
+eeg_zero_crossing_rate,0.04966760148895607
+eeg_rel_power_alpha,0.04891891884589974
+eeg_sef95,0.04761254160941668
+eeg_mean,0.045472199546049336
+eeg_bandpower_beta,0.0449750655971164

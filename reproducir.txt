@@ -13,12 +13,25 @@
 # EDA (solo limpio): python src/main.py ... --run-eda --task T --target-col y --eda-outdir reports/eda/T
 # Fase D (EDA sobre tabla ya preprocesada): python src/main.py --input ... --output ... --encoding-spec config/datasets/mitbih_sleep_stages.json --target-col sleep_stage --task mitbih_d --run-eda --run-eda-processed
 # Fase B (EDA sobre CSV tabular/export sin pipeline de limpieza): python scripts/raw_eda.py --input data/processed/mitbih_sleep_stages.csv --target-col sleep_stage --task mitbih_sleep_raw
+# Export raw/tabular desde loaders --source (útil para ISRUC / St. Vincent / Sleep-EDF): python scripts/export_source_raw.py --source isruc-sleep --raw-root data/raw --output data/processed/isruc_sleep_raw.csv
 # Ingesta: python src/main.py --source mit-bih-psg --raw-root data/raw --output data/processed/m.csv --task mb --target-col sleep_stage
 # Export WFDB: python src/main.py --export-epochs mit-bih-psg --raw-root data/raw --output-stages st.csv --output-events ev.csv
 # Fase E (CV / cross-dataset desde YAML): presets en config/experiments/*.yaml o copiar experiment_train.example.yaml; ejecutar:
 #   python scripts/run_phase_e_cv.py --config config/experiments/mitbih_sleep_stages.yaml
 #   python scripts/run_phase_e_cv.py --config config/mi_experimento.yaml
 #   (equiv.: PYTHONPATH=src python -m modeling.train_runner --config ...)
+# Fase E multitarget clásico (apnea + staging):
+#   python scripts/run_phase_e_classic_multitarget.py --config config/experiments/mitbih_apnea_stage_classic.yaml
+#   python scripts/run_phase_e_classic_multitarget.py --config config/experiments/cross_dataset_mitbih_to_st_vincent_classic.yaml
+#   python scripts/run_phase_e_classic_multitarget.py --config config/experiments/cross_dataset_st_vincent_to_mitbih_classic.yaml
 # Cross-dataset: en el YAML cross_dataset: true y eval_csv: ruta/al/otro.csv
+# Informe LaTeX:
+#   python scripts/build_latex_report_assets.py
+#   cd report/latex
+#   pdflatex --disable-installer -interaction=nonstopmode -halt-on-error main.tex
+#   bibtex main
+#   pdflatex --disable-installer -interaction=nonstopmode -halt-on-error main.tex
+#   pdflatex --disable-installer -interaction=nonstopmode -halt-on-error main.tex
+#   # o en PowerShell: .\report\latex\build_report.ps1
 # Tests: pytest -q  |  opcional tres modelos: pytest -q -m slow
 # Opcional entrega final: pip freeze > requirements-freeze.txt

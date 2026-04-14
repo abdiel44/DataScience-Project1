@@ -1,0 +1,25 @@
+\section{Datasets y preprocesamiento}
+
+La bater\'ia final del informe usa cuatro corpus: \emph{Sleep-EDF Expanded}, \emph{ISRUC-Sleep}, \emph{MIT-BIH PSG} y \emph{St. Vincent's University Hospital}. En todos los casos la unidad de an\'alisis es una ventana de 30 s y la se\~nal se resume como \feature{eeg\_*}. La diferencia entre ejes experimentales est\'a en la tarea: staging puro para Sleep-EDF/ISRUC y multitarget apnea + staging para MIT-BIH/St. Vincent.
+
+\input{tables/table_dataset_summary}
+
+La Tabla~\ref{tab:dataset_summary} resume el tama\~no de cada tabla, el canal EEG usado o equivalente y el rol experimental de cada corpus. \textbf{Sleep-EDF Expanded} es el baseline intra-dataset principal para staging; \textbf{ISRUC-Sleep} se usa como banco externo de generalizaci\'on para staging restringido a N1/N2/N3; \textbf{MIT-BIH PSG} es el baseline intra-dataset principal para apnea y staging; y \textbf{St. Vincent} funciona como cohorte cl\'inica externa para el estudio de cambio de dominio.
+
+\subsection{Segmentaci\'on, sincronizaci\'on y targets}
+
+Todas las tablas operan con \'epocas de 30 s. En staging, cada fila representa una ventana con una etiqueta \texttt{W}, \texttt{N1}, \texttt{N2}, \texttt{N3} o \texttt{REM} cuando la anotaci\'on es mapeable al esquema AASM. En apnea, la pol\'itica can\'onica del proyecto fue \textbf{\texttt{apnea\_binary}=1 si la ventana contiene cualquier evento respiratorio positivo y 0 en caso contrario}. Esa definici\'on se aplic\'o sobre las tablas multitarget exportadas desde el \emph{epoch store}, evitando reabrir EDF/WFDB dentro del ciclo de entrenamiento.
+
+En MIT-BIH, la etiqueta binaria se deriva a partir de los eventos respiratorios alineados con la misma rejilla temporal de 30 s que se usa para las etapas. En St. Vincent, el \texttt{apnea\_binary} se sincroniza con el archivo de eventos respiratorios y la etiqueta de sue\~no se toma cuando existe una correspondencia temporal v\'alida. La base contiene 15 filas con etiqueta \texttt{8}; esas filas se conservaron para apnea, pero se excluyeron del target de staging por no ser directamente mapeables a AASM. En Sleep-EDF, la tarea principal fue staging; apnea no se trat\'o como objetivo central en ese corpus. En ISRUC, el experimento final se limit\'o a staging y, m\'as concretamente, a la sub-tarea N1/N2/N3 para mantener comparabilidad con los experimentos \emph{cross-dataset} ya cerrados.
+
+\subsection{Canal EEG, remuestreo y normalizaci\'on}
+
+La l\'inea principal del proyecto es monocanal, pero la equivalencia exacta entre datasets no es perfecta. En Sleep-EDF se utiliz\'o \texttt{Fpz-Cz} a 100 Hz. En MIT-BIH el pipeline acept\'o el primer canal EEG disponible entre \texttt{EEG (C4-A1)}, \texttt{EEG (O2-A1)} y \texttt{EEG (C3-O1)}, todos remuestreados a 100 Hz dentro del contrato multitarget. En St. Vincent se emple\'o \texttt{chan 1} como canal equivalente disponible a 100 Hz. En ISRUC, la exportaci\'on tabular ya existente del repositorio conserva \texttt{eeg\_channel} con tres valores (\texttt{c4\_m1}, \texttt{loc\_a2}, \texttt{roc}); por eso este corpus se reporta como referencia de generalizaci\'on para staging y no como evidencia central de apnea.
+
+La normalizaci\'on de variables num\'ericas sigue el contrato de los \emph{dataset specs} del repositorio: \textbf{estandarizaci\'on ajustada s\'olo con train dentro de cada fold}. Esta decisi\'on es importante para SVM y tambi\'en evita fuga de informaci\'on. No se aplic\'o rechazo expl\'icito de artefactos cl\'inicos m\'as all\'a de la canalizaci\'on, el remuestreo y la definici\'on estable de la ventana; por lo tanto, el ruido residual y el cambio de dominio deben entenderse como limitaciones metodol\'ogicas deliberadamente visibles en la evaluaci\'on externa.
+
+\subsection{Extracci\'on de \emph{features}}
+
+Se usaron dos conjuntos principales de \feature{eeg\_*}. Para staging en Sleep-EDF/ISRUC se utiliz\'o una versi\'on compacta basada en estad\'isticos b\'asicos y potencia por bandas: media, desviaci\'on est\'andar, varianza, RMS, \emph{zero-crossing rate}, \emph{bandpower} en delta/theta/alpha/beta, potencias relativas, relaci\'on theta/alpha y entrop\'ia espectral. Para MIT-BIH/St. Vincent se extendi\'o el conjunto con \emph{spectral edge frequency} (SEF50/SEF95), par\'ametros de Hjorth, \emph{sample entropy}, \emph{permutation entropy}, sesgo y curtosis. Esa extensi\'on se justific\'o porque apnea requiere sensibilidad a cambios m\'as finos de microestructura y arousal, no solo a macro-estados de sue\~no.
+
+El desbalance de clases no se resolvi\'o con SMOTE ni con sobremuestreo externo. En su lugar se mantuvo el protocolo m\'as reproducible del repositorio: \texttt{class\_weight=balanced} en SVM y Random Forest, y ajuste de hiperpar\'ametros con \emph{nested CV} sin tocar el fold de prueba. Para apnea, esta decisi\'on permite observar con claridad cu\'ando un modelo se apoya artificialmente en la clase mayoritaria, algo que se hace evidente en los experimentos \emph{cross-dataset}.

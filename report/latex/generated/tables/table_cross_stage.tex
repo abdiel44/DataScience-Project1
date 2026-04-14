@@ -1,0 +1,25 @@
+\begin{table*}[t]
+\centering
+\caption{Resultados cross-dataset de staging para las direcciones evaluadas.}
+\label{tab:cross_stage}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llccc}
+\toprule
+Direccion & Modelo & Accuracy & Macro-F1 & Kappa \\
+\midrule
+Sleep-EDF -> ISRUC & Random Forest & 0.383 & 0.185 & -0.000 \\
+Sleep-EDF -> ISRUC & XGBoost & 0.286 & 0.263 & -0.033 \\
+Sleep-EDF -> ISRUC & SVM-RBF & 0.277 & 0.273 & -0.026 \\
+ISRUC -> Sleep-EDF & Random Forest & 0.477 & 0.308 & 0.046 \\
+ISRUC -> Sleep-EDF & XGBoost & 0.209 & 0.192 & -0.051 \\
+ISRUC -> Sleep-EDF & SVM-RBF & 0.432 & 0.338 & -0.004 \\
+MIT-BIH -> St. Vincent & Random Forest & 0.197 & 0.108 & 0.002 \\
+MIT-BIH -> St. Vincent & XGBoost & 0.200 & 0.096 & 0.001 \\
+MIT-BIH -> St. Vincent & SVM-RBF & 0.216 & 0.087 & -0.004 \\
+St. Vincent -> MIT-BIH & Random Forest & 0.248 & 0.083 & -0.063 \\
+St. Vincent -> MIT-BIH & XGBoost & 0.319 & 0.097 & -0.001 \\
+St. Vincent -> MIT-BIH & SVM-RBF & 0.063 & 0.024 & 0.000 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

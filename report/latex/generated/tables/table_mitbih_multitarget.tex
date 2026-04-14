@@ -1,0 +1,16 @@
+\begin{table*}[t]
+\centering
+\caption{MIT-BIH PSG multitarget: media$\pm$desviacion estandar por modelo para apnea y staging.}
+\label{tab:mitbih_multitarget}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccccc}
+\toprule
+Modelo & Apnea Acc. & Sens. & Spec. & AUC & Stage Acc. & Stage Macro-F1 & Stage Kappa \\
+\midrule
+SVM-RBF & 0.576 $\pm$ 0.042 & 0.543 $\pm$ 0.277 & 0.589 $\pm$ 0.166 & 0.600 $\pm$ 0.070 & 0.496 $\pm$ 0.077 & 0.426 $\pm$ 0.054 & 0.336 $\pm$ 0.081 \\
+Random Forest & 0.616 $\pm$ 0.039 & 0.458 $\pm$ 0.253 & 0.720 $\pm$ 0.139 & 0.632 $\pm$ 0.071 & 0.585 $\pm$ 0.065 & 0.464 $\pm$ 0.044 & 0.415 $\pm$ 0.078 \\
+XGBoost & 0.604 $\pm$ 0.070 & 0.398 $\pm$ 0.250 & 0.761 $\pm$ 0.119 & 0.640 $\pm$ 0.043 & 0.608 $\pm$ 0.040 & 0.446 $\pm$ 0.027 & 0.421 $\pm$ 0.053 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

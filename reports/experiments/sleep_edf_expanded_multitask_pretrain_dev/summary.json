@@ -1,0 +1,59 @@
+{
+  "models": [
+    "conformer_multitask"
+  ],
+  "folds": [
+    {
+      "model": "conformer_multitask",
+      "fold": 0,
+      "apnea_accuracy": null,
+      "apnea_sensitivity": null,
+      "apnea_specificity": null,
+      "apnea_auc_roc": null,
+      "apnea_n_samples": 0,
+      "stage_accuracy": 0.5535460992907801,
+      "stage_macro_f1": 0.3235998005792306,
+      "stage_cohen_kappa": 0.3344739167004236,
+      "train_seconds": 46.996558599999844,
+      "avg_epoch_seconds": 14.561564599998746,
+      "max_vram_mb": 126.3369140625,
+      "checkpoint_size_mb": 0.6395368576049805,
+      "best_epoch": 1
+    },
+    {
+      "model": "conformer_multitask",
+      "fold": 1,
+      "apnea_accuracy": null,
+      "apnea_sensitivity": null,
+      "apnea_specificity": null,
+      "apnea_auc_roc": null,
+      "apnea_n_samples": 0,
+      "stage_accuracy": 0.7895424836601307,
+      "stage_macro_f1": 0.41986259236688317,
+      "stage_cohen_kappa": 0.5965317191798699,
+      "train_seconds": 28.988407700002426,
+      "avg_epoch_seconds": 14.48747849999927,
+      "max_vram_mb": 108.87744140625,
+      "checkpoint_size_mb": 0.6395368576049805,
+      "best_epoch": 1
+    }
+  ],
+  "aggregate": {
+    "stage_accuracy": {
+      "mean": 0.6715442914754555,
+      "std": 0.16687464372307473
+    },
+    "stage_macro_f1": {
+      "mean": 0.37173119647305686,
+      "std": 0.06806807284899784
+    },
+    "stage_cohen_kappa": {
+      "mean": 0.46550281794014675,
+      "std": 0.18530284919606135
+    },
+    "train_seconds": {
+      "mean": 37.992483150001135,
+      "std": 12.733685618018802
+    }
+  }
+}

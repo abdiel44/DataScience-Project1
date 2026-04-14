@@ -8,6 +8,7 @@ from typing import Any, Dict, Optional, Tuple, Union
 
 import pandas as pd
 
+from modeling.target_utils import ensure_target_column
 from pre_processing.class_balance import (
     ClassBalanceOptions,
     ClassBalanceReport,
@@ -50,6 +51,7 @@ _SOURCE_CLI_TO_ID: Dict[str, SourceId] = {
     "isruc-sleep": "isruc_sleep",
     "st-vincent-apnea": "st_vincent_apnea",
     "sleep-edf-expanded": "sleep_edf_expanded",
+    "sleep-edf-2013-fpzcz": "sleep_edf_2013_fpzcz",
     "mit-bih-psg": "mit_bih_psg",
     "shhs-psg": "shhs_psg",
 }
@@ -312,6 +314,22 @@ def step_exploratory_data_analysis(
         target_col=target_col,
         top_n=top_n_plots,
     )
+
+
+def prepare_processed_df_for_eda(
+    df: pd.DataFrame,
+    *,
+    target_col_raw: str,
+) -> Tuple[pd.DataFrame, str]:
+    """
+    Ensure a processed dataframe has a usable target column for EDA.
+
+    If the original target was one-hot encoded (e.g. `sleep_stage_W`, `sleep_stage_R`, ...),
+    reconstruct a categorical target column named like the original target so that
+    `run_eda` can still plot target balance on the fully processed table.
+    """
+    out, target_col, _dummy_cols = ensure_target_column(df, target_col_raw=target_col_raw)
+    return out, target_col
 
 
 def parse_args() -> argparse.Namespace:
@@ -779,13 +797,16 @@ def main() -> None:
         if not args.task:
             raise ValueError("--task is required when --run-eda is enabled.")
 
-        eda_df = output_df if args.run_eda_processed else clean_df
+        if args.run_eda_processed:
+            eda_df, eda_target_col = prepare_processed_df_for_eda(output_df, target_col_raw=args.target_col)
+        else:
+            eda_df, eda_target_col = clean_df, args.target_col
         report_subdir = "eda_processed" if args.run_eda_processed else "eda"
         eda_output_dir = Path(args.eda_outdir) if args.eda_outdir else None
         eda_results = step_exploratory_data_analysis(
             eda_df,
             task=args.task,
-            target_col_raw=args.target_col,
+            target_col_raw=eda_target_col,
             eda_outdir=eda_output_dir,
             top_n_plots=int(args.top_n_plots),
             report_subdir=report_subdir,

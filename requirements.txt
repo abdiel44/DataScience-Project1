@@ -1,4 +1,5 @@
 pandas
+pyarrow
 numpy
 matplotlib
 seaborn
@@ -10,6 +11,6 @@ python-dotenv
 pytest
 pyyaml
 wfdb
-
-# Optional: pip install mne  → enables --source sleep-edf-expanded (EDF ingestion in raw_loaders.py)
+mne
+torch
 

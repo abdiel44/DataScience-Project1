@@ -1,8 +1,10 @@
-# SHHS — hipnograma 30 s (export WFDB). PRD §4.1.
+# SHHS — hipnograma 30 s desde CSV preprocesado.
+# Este preset queda listo a nivel de configuración, pero la copia local actual solo
+# tiene 1 sujeto y no soporta CV subject-wise formal con 5 folds.
 
 experiment_name: shhs_sleep_stages
 random_seed: 42
-train_csv: data/processed/shhs_sleep_stages.csv
+train_csv: data/processed/shhs_sleep_stages_prep.csv
 cross_dataset: false
 eval_csv: null
 
@@ -17,7 +19,9 @@ feature_exclude:
   - epoch_start_sec
   - epoch_end_sec
 
-feature_include: null
+feature_include:
+  - eeg_sec_mean
+  - eeg_sec_std
 
 cv:
   n_splits: 5

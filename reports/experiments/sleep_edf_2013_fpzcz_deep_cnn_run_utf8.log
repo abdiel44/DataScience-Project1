@@ -1,0 +1,6 @@
+[run] config=config\experiments\sleep_edf_2013_fpzcz_deep_cnn.yaml
+[run] train_csv=C:\Users\Losma\Desktop\DataScience-Project1-main\data\processed\sleep_edf_2013_fpzcz_raw.csv
+[run] train_shape=(195479, 137)
+[run_cv] rows=195479 subjects=153 classes=['W', 'N1', 'N2', 'N3', 'REM'] device=cuda model=cnn
+[run_cv] fold=1/5 train_rows=134729 val_rows=21988 test_rows=38762
+[train] start epochs=20 batches_per_epoch=16842 val=yes device=cuda

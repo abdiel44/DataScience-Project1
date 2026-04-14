@@ -1,0 +1,8 @@
+metric,value,detail
+input_rows,3781,
+output_rows,3781,
+removed_empty_rows,0,
+removed_duplicates,0,full row duplicate
+removed_target_missing_rows,0,
+string_normalized,record_id,
+string_normalized,sleep_stage,

@@ -23,6 +23,20 @@ data/processed/*
 
 # Reports
 
+# Model artifacts / weights
+*.joblib
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+
+# Large experiment model outputs
+reports/experiments/**/models/
+
 # Local large datasets / external repos
 Data-Set's/
 Baselines/SleepEEGNet-master/

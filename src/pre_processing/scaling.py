@@ -120,6 +120,9 @@ def scaling_options_from_dict(data: Mapping[str, Any]) -> Optional[ScalingOption
     ns = data.get("numeric_scaling")
     if ns is None or ns == "":
         return None
+    ns = str(ns).strip().lower()
+    if ns == "none":
+        return None
     if ns not in ("standardize", "minmax"):
         raise ValueError("numeric_scaling must be 'standardize' or 'minmax'")
 

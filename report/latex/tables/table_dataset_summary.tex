@@ -1,0 +1,17 @@
+\begin{table*}[t]
+\centering
+\caption{Resumen de datasets usados en el informe final.}
+\label{tab:dataset_summary}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllllll}
+\toprule
+Corpus & Rol & Filas & Sujetos & Canal EEG & Ventana & Nota \\
+\midrule
+Sleep-EDF Expanded & Staging intra-dataset & 457\,652 & 197 & Fpz-Cz & 30 s @ 100 Hz & 5 clases AASM \\
+ISRUC-Sleep & Staging cross-dataset & 22\,320 & 223 & Export repo (\texttt{c4\_m1}/\texttt{loc\_a2}/\texttt{roc}) & 30 s @ 200 Hz & Referencia externa de staging \\
+MIT-BIH PSG & Apnea + staging intra/cross & 8\,645 & 16 & C4-A1 / O2-A1 / C3-O1 & 30 s @ 100 Hz & \texttt{apnea\_binary} + \texttt{sleep\_stage} \\
+St. Vincent & Apnea + staging cross-dataset & 20\,789 & 25 & \texttt{chan 1} & 30 s @ 100 Hz & 15 filas con etiqueta 8 excluidas de staging \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

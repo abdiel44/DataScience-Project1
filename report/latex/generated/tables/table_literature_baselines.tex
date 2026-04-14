@@ -1,0 +1,21 @@
+\begin{table*}[t]
+\centering
+\caption{Baselines publicados y grado de comparabilidad con el protocolo del proyecto.}
+\label{tab:literature_baselines}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllllll}
+\toprule
+Referencia & Dataset & Canal & Tarea & Modelo & Comparable & Nota \\
+\midrule
+\cite{mousavi2019sleepeegnet} & Sleep-EDF & EEG monocanal & Sleep staging & Seq2Seq deep & No & Usa deep learning; comparable solo por dataset y tarea \\
+\cite{barnes2022apneaeegcnn} & Apnea cohort & EEG monocanal & Apnea & CNN explicable & Parcial & Comparable por tarea y canal, no por familia de modelo \\
+\cite{gao2023psdrf} & Sleep-EDF & Fpz-Cz / Pz-Oz & Sleep staging & PSD + Random Forest & Si & Muy cercano a nuestro baseline de staging \\
+\cite{nakamura2017complexity} & Sleep EEG & EEG & Sleep staging & Complejidad/HMM-style & Parcial & Comparable por monocanal y features, no por pipeline final \\
+\cite{ghimatgar2019hmm} & Sleep EEG & EEG monocanal & Sleep staging & HMM & Parcial & Sirve como contraste secuencial, no como linea principal \\
+\cite{li2022cascadedsvm} & Sleep EEG & EEG monocanal & Sleep staging & SVM en cascada & Si & Muy comparable con la familia SVM del proyecto \\
+\cite{wang2024svmxgboost} & Sleep EEG & EEG & Sleep staging & SVM + XGBoost & Si & Comparable por familias clasicas y objetivo \\
+\cite{satapathy2024multimodality} & Multimodal sleep data & Multimodal & Sleep staging & ML multimodal & No & Sirve como referencia externa, pero no es justo por usar mas senales \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

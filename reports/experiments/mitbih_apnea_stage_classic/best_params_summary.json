@@ -1,0 +1,23 @@
+{
+  "random_forest": {
+    "folds": 12,
+    "most_common_params_json": "{\"class_weight\": \"balanced\", \"max_depth\": 10, \"min_samples_leaf\": 5, \"n_estimators\": 200, \"n_jobs\": -1}",
+    "most_common_count": 4,
+    "inner_best_score_mean": 0.5243882970922481,
+    "inner_best_score_std": 0.12086042489830648
+  },
+  "xgboost": {
+    "folds": 12,
+    "most_common_params_json": "{\"colsample_bytree\": 0.8, \"learning_rate\": 0.03, \"max_depth\": 3, \"n_estimators\": 150, \"n_jobs\": -1, \"scale_pos_weight\": 1.0, \"subsample\": 0.8, \"tree_method\": \"hist\"}",
+    "most_common_count": 4,
+    "inner_best_score_mean": 0.5152160743457387,
+    "inner_best_score_std": 0.1313687363814614
+  },
+  "svm_rbf": {
+    "folds": 12,
+    "most_common_params_json": "{\"C\": 1, \"class_weight\": \"balanced\", \"gamma\": 0.01}",
+    "most_common_count": 3,
+    "inner_best_score_mean": 0.5014425804418566,
+    "inner_best_score_std": 0.1390598980684734
+  }
+}

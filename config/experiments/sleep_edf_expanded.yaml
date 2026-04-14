@@ -1,19 +1,43 @@
-# Sleep-EDF Expanded — CSV propio (tras MNE u otra exportación). Ajustar train_csv y columnas.
+# Sleep-EDF Expanded - epoch-level staging baseline with one EEG channel exported as generic eeg_* features.
 
 experiment_name: sleep_edf_expanded
 random_seed: 42
-train_csv: data/processed/sleep_edf_my_export.csv
+train_csv: data/processed/sleep_edf_expanded_prep.csv
 cross_dataset: false
 eval_csv: null
 
-subject_column: recording_id
+subject_column: subject_id
 target_column: sleep_stage
 task: multiclass
 
 feature_exclude:
-  - subject_id
+  - recording_id
+  - epoch_index
+  - epoch_start_sample
+  - epoch_end_sample
+  - epoch_start_sec
+  - epoch_end_sec
+  - source_file
+  - hypnogram_file
+  - eeg_channel
+  - sfreq_hz
 
-feature_include: null
+feature_include:
+  - eeg_mean
+  - eeg_std
+  - eeg_var
+  - eeg_rms
+  - eeg_zero_crossing_rate
+  - eeg_bandpower_delta
+  - eeg_bandpower_theta
+  - eeg_bandpower_alpha
+  - eeg_bandpower_beta
+  - eeg_rel_power_delta
+  - eeg_rel_power_theta
+  - eeg_rel_power_alpha
+  - eeg_rel_power_beta
+  - eeg_theta_alpha_ratio
+  - eeg_spectral_entropy
 
 cv:
   n_splits: 5
@@ -22,6 +46,9 @@ cv:
 
 output:
   root: reports/experiments
+  save_models: true
+  save_fold_models: true
+  save_final_model: true
 
 models:
   svm_rbf: true
@@ -29,8 +56,8 @@ models:
   xgboost: true
 
 hyperparams:
-  svm_rbf: { C: 1.0, gamma: scale }
-  random_forest: { n_estimators: 200, max_depth: null, n_jobs: -1 }
+  svm_rbf: { C: 1.0, gamma: scale, class_weight: balanced }
+  random_forest: { n_estimators: 200, max_depth: null, n_jobs: -1, class_weight: balanced }
   xgboost:
     n_estimators: 150
     max_depth: 4

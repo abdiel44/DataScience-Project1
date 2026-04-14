@@ -1,0 +1,214 @@
+column,category,frequency,proportion_pct
+aux_raw,2 X,728,19.2542
+aux_raw,2 OA,494,13.0653
+aux_raw,1 X,493,13.0389
+aux_raw,1 HA,285,7.5377
+aux_raw,2 HA,252,6.6649
+aux_raw,W X,117,3.0944
+aux_raw,2 H,117,3.0944
+aux_raw,W HA,116,3.068
+aux_raw,1 CAA,80,2.1158
+aux_raw,2 LA,80,2.1158
+aux_raw,2 L,78,2.0629
+aux_raw,3 L,77,2.0365
+aux_raw,R X,58,1.534
+aux_raw,R H,53,1.4017
+aux_raw,W CAA,48,1.2695
+aux_raw,1 OA,45,1.1902
+aux_raw,2 X X,45,1.1902
+aux_raw,1 H,41,1.0844
+aux_raw,3 X,34,0.8992
+aux_raw,R HA,30,0.7934
+aux_raw,3 LA,30,0.7934
+aux_raw,4 L,26,0.6876
+aux_raw,R OA,25,0.6612
+aux_raw,2 CA,23,0.6083
+aux_raw,4 LA,22,0.5819
+aux_raw,2 CAA,21,0.5554
+aux_raw,1 CA,20,0.529
+aux_raw,R L,16,0.4232
+aux_raw,2 OA OA,15,0.3967
+aux_raw,1 X X,15,0.3967
+aux_raw,4 LA LA,14,0.3703
+aux_raw,2 A,13,0.3438
+aux_raw,1 HA HA,11,0.2909
+aux_raw,4 X,10,0.2645
+aux_raw,3 H,9,0.238
+aux_raw,W OA,9,0.238
+aux_raw,3 LA LA,8,0.2116
+aux_raw,4 L L,6,0.1587
+aux_raw,3 HA,6,0.1587
+aux_raw,2 X L,6,0.1587
+aux_raw,W L,6,0.1587
+aux_raw,1 L,6,0.1587
+aux_raw,W CA,5,0.1322
+aux_raw,2 L L,5,0.1322
+aux_raw,R A,5,0.1322
+aux_raw,W HA X,4,0.1058
+aux_raw,1 HA X,4,0.1058
+aux_raw,2 HA H,4,0.1058
+aux_raw,2 L A,4,0.1058
+aux_raw,2 HA HA,4,0.1058
+aux_raw,1 A,4,0.1058
+aux_raw,W X X,4,0.1058
+aux_raw,2 H LA,4,0.1058
+aux_raw,2 LA LA,4,0.1058
+aux_raw,4 L LA,4,0.1058
+aux_raw,W LA,4,0.1058
+aux_raw,1 L L,4,0.1058
+aux_raw,3 OA,4,0.1058
+aux_raw,W CAA L,4,0.1058
+aux_raw,1 CAA CAA,4,0.1058
+aux_raw,MT X,4,0.1058
+aux_raw,2 L LA,4,0.1058
+aux_raw,1 H H,3,0.0793
+aux_raw,1 HA CAA,3,0.0793
+aux_raw,2 L X,3,0.0793
+aux_raw,1 LA,3,0.0793
+aux_raw,3 L LA,3,0.0793
+aux_raw,2 H H,3,0.0793
+aux_raw,W H,3,0.0793
+aux_raw,R LA,3,0.0793
+aux_raw,R CA,3,0.0793
+aux_raw,3 H H,2,0.0529
+aux_raw,4 L L L,2,0.0529
+aux_raw,2 LA HA,2,0.0529
+aux_raw,W X CAA,2,0.0529
+aux_raw,1 X L,2,0.0529
+aux_raw,2 OA L,2,0.0529
+aux_raw,W CAA HA,2,0.0529
+aux_raw,1 H X,2,0.0529
+aux_raw,4 H L,2,0.0529
+aux_raw,R CAA,2,0.0529
+aux_raw,1 X H,2,0.0529
+aux_raw,1 CAA HA,2,0.0529
+aux_raw,2 LA H,2,0.0529
+aux_raw,R X OA,2,0.0529
+aux_raw,R X H,2,0.0529
+aux_raw,2 LA L,2,0.0529
+aux_raw,3 A,2,0.0529
+aux_raw,1 HA H,2,0.0529
+aux_raw,R X X,2,0.0529
+aux_raw,3 H LA,1,0.0264
+aux_raw,R H X,1,0.0264
+aux_raw,2 X H,1,0.0264
+aux_raw,2 HA X,1,0.0264
+aux_raw,1 A X,1,0.0264
+aux_raw,2 L HA,1,0.0264
+aux_raw,4 LA L,1,0.0264
+aux_raw,4 LA HA LA,1,0.0264
+aux_raw,3 LA L,1,0.0264
+aux_raw,R L H,1,0.0264
+aux_raw,3 L HA LA,1,0.0264
+aux_raw,3 L L,1,0.0264
+aux_raw,2 H HA,1,0.0264
+aux_raw,2 L OA,1,0.0264
+aux_raw,1 HA CA,1,0.0264
+aux_raw,1 CAA X,1,0.0264
+aux_raw,W HA HA,1,0.0264
+aux_raw,R H CA,1,0.0264
+aux_raw,R H HA,1,0.0264
+aux_raw,2 X A,1,0.0264
+aux_raw,2 A A A,1,0.0264
+aux_raw,R X CA,1,0.0264
+aux_raw,1 HA L,1,0.0264
+aux_raw,R CAA L,1,0.0264
+aux_raw,R L CAA,1,0.0264
+aux_raw,1 LA X,1,0.0264
+aux_raw,2 X OA,1,0.0264
+aux_raw,1 LA LA,1,0.0264
+aux_raw,1 OA OA,1,0.0264
+aux_raw,4 CA,1,0.0264
+aux_raw,4 L H,1,0.0264
+aux_raw,3 LL H,1,0.0264
+aux_raw,2 L H,1,0.0264
+aux_raw,3 H CA,1,0.0264
+aux_raw,W CAA CAA,1,0.0264
+aux_raw,1 OA X,1,0.0264
+aux_raw,4 CAA,1,0.0264
+aux_raw,R L LA,1,0.0264
+aux_raw,3 X LA,1,0.0264
+aux_raw,2 H L,1,0.0264
+aux_raw,3 X L,1,0.0264
+aux_raw,3 CAA,1,0.0264
+aux_raw,1 H HA,1,0.0264
+aux_raw,2 HA L,1,0.0264
+aux_raw,1 CAA CAA L,1,0.0264
+event_tokens,X,1444,38.191
+event_tokens,HA,689,18.2227
+event_tokens,OA,577,15.2605
+event_tokens,H,224,5.9244
+event_tokens,L,209,5.5276
+event_tokens,CAA,153,4.0465
+event_tokens,LA,142,3.7556
+event_tokens,X X,66,1.7456
+event_tokens,CA,52,1.3753
+event_tokens,LA LA,27,0.7141
+event_tokens,A,24,0.6348
+event_tokens,HA HA,16,0.4232
+event_tokens,OA OA,16,0.4232
+event_tokens,L L,16,0.4232
+event_tokens,L LA,12,0.3174
+event_tokens,HA X,9,0.238
+event_tokens,X L,9,0.238
+event_tokens,H H,8,0.2116
+event_tokens,HA H,6,0.1587
+event_tokens,X H,5,0.1322
+event_tokens,CAA CAA,5,0.1322
+event_tokens,H LA,5,0.1322
+event_tokens,CAA L,5,0.1322
+event_tokens,LA L,4,0.1058
+event_tokens,CAA HA,4,0.1058
+event_tokens,L A,4,0.1058
+event_tokens,X OA,3,0.0793
+event_tokens,HA CAA,3,0.0793
+event_tokens,L H,3,0.0793
+event_tokens,H HA,3,0.0793
+event_tokens,L X,3,0.0793
+event_tokens,H X,3,0.0793
+event_tokens,H L,3,0.0793
+event_tokens,H CA,2,0.0529
+event_tokens,HA L,2,0.0529
+event_tokens,LA HA,2,0.0529
+event_tokens,L L L,2,0.0529
+event_tokens,OA L,2,0.0529
+event_tokens,LA H,2,0.0529
+event_tokens,X CAA,2,0.0529
+event_tokens,L HA LA,1,0.0264
+event_tokens,L HA,1,0.0264
+event_tokens,LA HA LA,1,0.0264
+event_tokens,A A A,1,0.0264
+event_tokens,X A,1,0.0264
+event_tokens,X CA,1,0.0264
+event_tokens,A X,1,0.0264
+event_tokens,LA X,1,0.0264
+event_tokens,L OA,1,0.0264
+event_tokens,CAA X,1,0.0264
+event_tokens,HA CA,1,0.0264
+event_tokens,L CAA,1,0.0264
+event_tokens,OA X,1,0.0264
+event_tokens,X LA,1,0.0264
+event_tokens,CAA CAA L,1,0.0264
+record_id,slp37,567,14.996
+record_id,slp60,352,9.3097
+record_id,slp61,347,9.1775
+record_id,slp04,341,9.0188
+record_id,slp16,297,7.8551
+record_id,slp48,294,7.7757
+record_id,slp59,245,6.4798
+record_id,slp03,244,6.4533
+record_id,slp66,229,6.0566
+record_id,slp01a,190,5.0251
+record_id,slp14,184,4.8664
+record_id,slp32,130,3.4382
+record_id,slp02a,113,2.9886
+record_id,slp01b,89,2.3539
+record_id,slp02b,86,2.2745
+record_id,slp67x,73,1.9307
+sleep_stage,2,1926,50.9389
+sleep_stage,1,1041,27.5324
+sleep_stage,w,326,8.6221
+sleep_stage,r,209,5.5276
+sleep_stage,3,184,4.8664
+sleep_stage,4,91,2.4068
+sleep_stage,mt,4,0.1058

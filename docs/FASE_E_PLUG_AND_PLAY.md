@@ -7,7 +7,8 @@ Este documento alinea el [PRD §4 y §11](PRD.md) con el runner [`train_runner`]
 El runner **comprueba que el archivo exista** antes de leer; si la ruta es relativa, intenta el cwd y **el directorio donde está el YAML** (útil con `config/experiments/foo.yaml` y `train_csv: ../data/out.csv`).
 
 - Cross-dataset (PRD E3): `cross_dataset: true` y `eval_csv`. No se tunear en B.
-- Presets [`config/experiments/`](../config/experiments/README.md): apuntan a `data/processed/...`. Esos CSV **no van en git**: debes generarlos (export WFDB, ingesta, etc.); si falta el archivo, el error indica las rutas probadas.
+- `train_csv` y `eval_csv` aceptan **`.csv` o `.parquet`**. Para corridas pesadas, usa `.parquet` para reducir I/O.
+- Presets [`config/experiments/`](../config/experiments/README.md): apuntan a `data/processed/...`. Esas tablas **no van en git**: debes generarlas (export WFDB, ingesta, etc.); si falta el archivo, el error indica las rutas probadas.
 
 ## 2. `subject_column` y `target_column`
 
@@ -43,9 +44,34 @@ El bloque `hyperparams` es **fijo** en cada ejecución del runner. Para cumplir 
 - Ajusta a mano tras pilotos, o
 - Implementa grid/random search en un notebook **usando solo train** (idealmente dentro de cada fold de CV por sujeto para no sesgar la estimación).
 
-El runner **no** sustituye ese trabajo de tuning.
+Ahora el runner también soporta un bloque `tuning` con `nested_cv`:
 
-## 6. Comando rápido
+- `tuning.enabled: true`
+- `tuning.inner_cv_splits`
+- `tuning.scoring`
+- `tuning.search_space`
+- `tuning.train_subject_subsample`
+
+Para `svm_rbf` sobre datasets grandes, el submuestreo de sujetos de `outer-train` permite elegir `C` y `gamma` sin tunear sobre todo el fold.
+
+## 6. Reanudación de corridas largas
+
+Si una corrida tarda mucho, usa:
+
+```yaml
+output:
+  resume_completed: true
+```
+
+En ese modo, el runner salta un fold si ya existen:
+
+- la fila correspondiente en `metrics_per_fold.csv`
+- el CSV de predicciones del fold
+- la matriz de confusión PNG del fold
+
+El modelo final se entrena solo cuando todos los folds del modelo están completos.
+
+## 7. Comando rápido
 
 Desde la raíz del repo (o con `PYTHONPATH=src`):
 

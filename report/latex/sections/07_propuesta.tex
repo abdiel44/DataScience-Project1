@@ -1,0 +1,35 @@
+\section{Propuesta de mejora}
+
+La limitaci\'on dominante de la bater\'ia experimental es el \textbf{cambio de dominio}. Por ello, la mejora propuesta no apunta a exprimir unas d\'ecimas extra dentro del mismo dataset, sino a aumentar la robustez \emph{cross-dataset}. La propuesta concreta es un \textbf{Conformer multitarea con adaptaci\'on adversarial de dominio} para EEG monocanal, entrenado con las mismas ventanas de 30 s y con dos cabezas: una para \texttt{sleep\_stage} y otra para \texttt{apnea\_binary}. La tercera cabeza ser\'ia un discriminador de dominio que intenta identificar si una ventana proviene del corpus fuente o del corpus destino.
+
+\subsection{Justificaci\'on te\'orica}
+
+La idea es aprender una representaci\'on del EEG que conserve informaci\'on discriminativa para staging y apnea, pero que sea lo menos sensible posible a la identidad del dataset. Si el encoder se entrena con una p\'erdida de clasificaci\'on multitarea y, simult\'aneamente, con una p\'erdida adversarial que penaliza la separabilidad fuente/destino, entonces parte del sesgo por cohorte podr\'ia reducirse sin abandonar la restricci\'on de EEG monocanal. Esta propuesta ataca directamente el principal hallazgo del trabajo: el deterioro radical de las m\'etricas cuando el modelo sale del dataset fuente.
+
+\subsection{Pseudoc\'odigo}
+
+\begin{quote}
+\ttfamily
+Entrada: ventanas EEG monocanal de 30 s, etiquetas de staging/apnea en el dominio fuente,\\
+ventanas sin etiquetar o parcialmente etiquetadas en el dominio destino.\\[4pt]
+1. Extraer secuencias de \'epocas desde el mismo contrato temporal usado en la l\'inea cl\'asica.\\
+2. Pasar cada secuencia por un encoder Conformer compartido.\\
+3. Alimentar la representaci\'on latente a: (a) cabeza de staging, (b) cabeza de apnea.\\
+4. Alimentar la misma representaci\'on a un discriminador de dominio con gradiente invertido.\\
+5. Optimizar una p\'erdida total = p\'erdida\_stage + lambda\_a * p\'erdida\_apnea - lambda\_d * p\'erdida\_dominio.\\
+6. Ajustar s\'olo con train del dominio fuente y datos no etiquetados del destino.\\
+7. Evaluar con el mismo protocolo subject-wise y cross-dataset del baseline cl\'asico.
+\end{quote}
+
+\subsection{Evaluaci\'on justa frente al baseline}
+
+Para que la comparaci\'on sea justa, el m\'etodo propuesto deber\'ia:
+\begin{itemize}[leftmargin=*]
+\item usar exactamente los mismos sujetos fuente/destino que la bater\'ia final de este informe;
+\item mantener EEG monocanal y ventanas de 30 s;
+\item no ajustar hiperpar\'ametros con etiquetas del conjunto destino;
+\item reportar las mismas m\'etricas de apnea y staging;
+\item compararse contra el mejor baseline cl\'asico de este trabajo, no contra un baseline m\'as d\'ebil.
+\end{itemize}
+
+La propuesta es factible, est\'a alineada con el patr\'on de error observado y responde al problema metodol\'ogico central del laboratorio: lograr robustez entre cohortes heterog\'eneas sin abandonar la simplicidad instrumental del EEG monocanal.

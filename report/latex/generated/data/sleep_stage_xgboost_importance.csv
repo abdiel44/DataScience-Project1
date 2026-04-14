@@ -1,0 +1,11 @@
+feature,importance
+eeg_bandpower_delta,0.18987062573432922
+eeg_zero_crossing_rate,0.141617089509964
+eeg_rel_power_alpha,0.12048301845788956
+eeg_bandpower_beta,0.10817643254995346
+eeg_rms,0.0569809153676033
+eeg_rel_power_theta,0.05405022203922272
+eeg_theta_alpha_ratio,0.0508955717086792
+eeg_rel_power_beta,0.04704725742340088
+eeg_var,0.04692269489169121
+eeg_spectral_entropy,0.044405654072761536

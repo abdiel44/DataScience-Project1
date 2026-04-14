@@ -1,0 +1,17 @@
+\begin{table*}[t]
+\centering
+\caption{Comparaci\'on resumida entre resultados propios y baselines publicados cercanos.}
+\label{tab:published_comparison}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllll}
+\toprule
+Referencia & Tarea / dataset & M\'etricas publicadas & Resultado propio m\'as cercano & Nota de comparabilidad \\
+\midrule
+\cite{mousavi2019sleepeegnet} & Staging, Sleep-EDF & Acc. 0.843; Macro-F1 0.797; $\kappa=0.79$ & XGBoost: Acc. 0.811; RF: Macro-F1 0.608; XGBoost: $\kappa=0.644$ & Ellos usan modelo profundo con contexto secuencial \\
+\cite{gao2023psdrf} & Staging, Sleep-EDF & Acc. 0.919; Macro-F1 0.732; $\kappa=0.845$ & RF: Acc. 0.796; Macro-F1 0.608; $\kappa=0.631$ & Muy comparable por dataset/canal, pero protocolo no necesariamente igual \\
+\cite{nakamura2017complexity} & Staging, Sleep-EDF Expanded & Acc. 0.938; sensibilidad S1 0.491; $\kappa=0.90$ & XGBoost: Acc. 0.811; N1 F1 0.171; RF: N1 F1 0.256 & Nuestro protocolo es m\'as conservador y no usa contexto expl\'icito \\
+\cite{barnes2022apneaeegcnn} & Apnea, EEG monocanal & Acc. 0.699; MCC 0.38 & XGBoost MIT-BIH: Acc. 0.604; AUC 0.640 & Cohortes y m\'etricas no son id\'enticas, pero la tarea y la restricci\'on de canal s\'i \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

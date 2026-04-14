@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from main import parse_args, step_exploratory_data_analysis
+from main import parse_args, prepare_processed_df_for_eda, step_exploratory_data_analysis
 
 
 def test_step_eda_uses_eda_processed_subdir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -73,3 +73,27 @@ def test_run_eda_processed_without_run_eda_raises(tmp_path: Path, monkeypatch: p
 
     with pytest.raises(ValueError, match="--run-eda-processed requires --run-eda"):
         main_module.main()
+
+
+def test_prepare_processed_df_for_eda_reconstructs_one_hot_target() -> None:
+    df = pd.DataFrame(
+        {
+            "x": [1.0, 2.0, 3.0],
+            "sleep_stage_w": [1.0, 0.0, 0.0],
+            "sleep_stage_n2": [0.0, 1.0, 0.0],
+            "sleep_stage_rem": [0.0, 0.0, 1.0],
+        }
+    )
+
+    out, target = prepare_processed_df_for_eda(df, target_col_raw="sleep_stage")
+
+    assert target == "sleep_stage"
+    assert "sleep_stage" in out.columns
+    assert out["sleep_stage"].tolist() == ["w", "n2", "rem"]
+
+
+def test_prepare_processed_df_for_eda_keeps_existing_target() -> None:
+    df = pd.DataFrame({"x": [1, 2], "target": ["a", "b"]})
+    out, target = prepare_processed_df_for_eda(df, target_col_raw="target")
+    assert target == "target"
+    assert out.equals(df)

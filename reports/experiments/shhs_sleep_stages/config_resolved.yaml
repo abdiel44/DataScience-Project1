@@ -1,0 +1,41 @@
+experiment_name: shhs_sleep_stages
+random_seed: 42
+train_csv: data/processed/shhs_sleep_stages_prep.csv
+cross_dataset: false
+eval_csv: null
+subject_column: record_id
+target_column: sleep_stage
+task: multiclass
+feature_exclude:
+- epoch_index
+- epoch_start_sample
+- epoch_end_sample
+- epoch_start_sec
+- epoch_end_sec
+feature_include:
+- eeg_sec_mean
+- eeg_sec_std
+cv:
+  n_splits: 5
+  stratify: true
+  shuffle: true
+output:
+  root: reports/experiments
+models:
+  svm_rbf: true
+  random_forest: true
+  xgboost: true
+hyperparams:
+  svm_rbf:
+    C: 1.0
+    gamma: scale
+  random_forest:
+    n_estimators: 200
+    max_depth: null
+    n_jobs: -1
+  xgboost:
+    n_estimators: 150
+    max_depth: 4
+    learning_rate: 0.1
+    n_jobs: -1
+    tree_method: hist

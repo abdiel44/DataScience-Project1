@@ -1,11 +1,18 @@
 {
-  "description": "ISRUC-Sleep segment CSVs → one row per file (channel mean/std + path-derived labels).",
-  "target_column": "event_group",
-  "nominal_columns": ["event_group"],
+  "description": "ISRUC-Sleep segments to one row per segment with subject parsed from filename, sleep_stage target, and generic monocanal eeg_* features.",
+  "target_column": "sleep_stage",
+  "nominal_columns": ["sleep_stage"],
   "ordinal_columns": {},
   "binary_columns": [],
-  "numeric_scaling": "none",
-  "scale_exclude": ["source_file", "subject_unit_id"],
+  "numeric_scaling": "standardize",
+  "scale_exclude": [
+    "source_file",
+    "subject_unit_id",
+    "event_group",
+    "eeg_channel",
+    "sfreq_hz",
+    "epoch_duration_sec"
+  ],
   "class_balance_method": "none",
   "dimensionality_method": "none"
 }

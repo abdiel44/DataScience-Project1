@@ -1,9 +1,9 @@
-# MIT-BIH PSG — estadificación (épocas ~30 s). Alineado con PRD §4.1 y export WFDB.
-# Solo ajusta train_csv (y rutas) si tu archivo tiene otro nombre.
+# MIT-BIH PSG — estadificación (épocas ~30 s) desde CSV preprocesado.
+# Alineado con PRD §4.1, PRD §4.2 (EEG monocanal) y Fase E formal.
 
 experiment_name: mitbih_sleep_stages
 random_seed: 42
-train_csv: data/processed/mitbih_sleep_stages.csv
+train_csv: data/processed/mitbih_sleep_stages_prep.csv
 cross_dataset: false
 eval_csv: null
 
@@ -20,12 +20,10 @@ feature_exclude:
   - epoch_end_sec
   - aux_raw
 
-# PRD §4.2 EEG monocanal: lista explícita de columnas del canal elegido, p. ej.:
-# feature_include:
-#   - eeg_c4_a1_mean
-#   - eeg_c4_a1_std
-# Sustituye por los nombres reales de tu .hea (snake_case tras cleaning).
-feature_include: null
+# PRD §4.2 EEG monocanal: usar un único canal EEG (mean/std) en el experimento formal.
+feature_include:
+  - eeg_c4_a1_mean
+  - eeg_c4_a1_std
 
 cv:
   n_splits: 5

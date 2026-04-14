@@ -1,0 +1,17 @@
+subject_unit_id,fold,fold_strategy_used
+slp01a,0,apnea_bin_only
+slp01b,1,apnea_bin_only
+slp02a,2,apnea_bin_only
+slp02b,3,apnea_bin_only
+slp03,4,apnea_bin_only
+slp04,1,apnea_bin_only
+slp14,0,apnea_bin_only
+slp16,2,apnea_bin_only
+slp32,3,apnea_bin_only
+slp37,0,apnea_bin_only
+slp48,4,apnea_bin_only
+slp59,1,apnea_bin_only
+slp60,3,apnea_bin_only
+slp61,4,apnea_bin_only
+slp66,2,apnea_bin_only
+slp67x,0,apnea_bin_only

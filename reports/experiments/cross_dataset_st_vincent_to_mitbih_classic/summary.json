@@ -1,0 +1,37 @@
+{
+  "models": [
+    "random_forest",
+    "xgboost",
+    "svm_rbf"
+  ],
+  "aggregate": {
+    "apnea_accuracy": {
+      "mean": 0.5631000578369,
+      "std": 0.0
+    },
+    "apnea_sensitivity": {
+      "mean": 0.0,
+      "std": 0.0
+    },
+    "apnea_specificity": {
+      "mean": 1.0,
+      "std": 0.0
+    },
+    "apnea_auc_roc": {
+      "mean": 0.4503496581211643,
+      "std": 0.05641348162714553
+    },
+    "stage_accuracy": {
+      "mean": 0.21010217852323118,
+      "std": 0.1318799185692233
+    },
+    "stage_macro_f1": {
+      "mean": 0.06795590330897901,
+      "std": 0.038853731434863904
+    },
+    "stage_cohen_kappa": {
+      "mean": -0.021526749467544033,
+      "std": 0.03612860900848529
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "description": "Sleep-EDF 2013 sleep-cassette subset aligned to SleepEEGNet: Fpz-Cz only, 30 s epochs, AASM sleep_stage, wake-trim, normalized-epoch eeg_* features plus temporal context.",
+  "target_column": "sleep_stage",
+  "nominal_columns": ["sleep_stage"],
+  "ordinal_columns": {},
+  "binary_columns": [],
+  "numeric_scaling": "none",
+  "scale_exclude": [
+    "recording_id",
+    "subject_id",
+    "epoch_index",
+    "epoch_start_sample",
+    "epoch_end_sample",
+    "epoch_start_sec",
+    "epoch_end_sec",
+    "sfreq_hz",
+    "source_file",
+    "hypnogram_file",
+    "eeg_channel",
+    "recording_epochs_before_trim",
+    "recording_epochs_after_trim",
+    "wake_trim_minutes"
+  ],
+  "class_balance_method": "none",
+  "dimensionality_method": "none"
+}

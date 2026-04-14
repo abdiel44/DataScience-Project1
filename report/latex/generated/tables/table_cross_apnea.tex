@@ -1,0 +1,19 @@
+\begin{table*}[t]
+\centering
+\caption{Resultados cross-dataset de apnea para las direcciones evaluadas.}
+\label{tab:cross_apnea}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llcccc}
+\toprule
+Direccion & Modelo & Accuracy & Sensitivity & Specificity & AUC-ROC \\
+\midrule
+MIT-BIH -> St. Vincent & Random Forest & 0.741 & 0.106 & 0.900 & 0.528 \\
+MIT-BIH -> St. Vincent & XGBoost & 0.799 & 0.000 & 1.000 & 0.452 \\
+MIT-BIH -> St. Vincent & SVM-RBF & 0.722 & 0.113 & 0.875 & 0.478 \\
+St. Vincent -> MIT-BIH & Random Forest & 0.563 & 0.000 & 1.000 & 0.389 \\
+St. Vincent -> MIT-BIH & XGBoost & 0.563 & 0.000 & 1.000 & 0.462 \\
+St. Vincent -> MIT-BIH & SVM-RBF & 0.563 & 0.000 & 1.000 & 0.500 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

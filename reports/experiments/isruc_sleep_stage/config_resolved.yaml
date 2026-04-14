@@ -1,0 +1,59 @@
+experiment_name: isruc_sleep_stage
+random_seed: 42
+train_csv: data/processed/isruc_sleep_prep.csv
+cross_dataset: false
+eval_csv: null
+subject_column: subject_unit_id
+target_column: sleep_stage
+task: multiclass
+feature_exclude:
+- source_file
+- event_group
+- eeg_channel
+- sfreq_hz
+- epoch_duration_sec
+feature_include:
+- eeg_mean
+- eeg_std
+- eeg_var
+- eeg_rms
+- eeg_zero_crossing_rate
+- eeg_bandpower_delta
+- eeg_bandpower_theta
+- eeg_bandpower_alpha
+- eeg_bandpower_beta
+- eeg_rel_power_delta
+- eeg_rel_power_theta
+- eeg_rel_power_alpha
+- eeg_rel_power_beta
+- eeg_theta_alpha_ratio
+- eeg_spectral_entropy
+cv:
+  n_splits: 5
+  stratify: true
+  shuffle: true
+output:
+  root: reports/experiments
+  save_models: true
+  save_fold_models: true
+  save_final_model: true
+models:
+  svm_rbf: true
+  random_forest: true
+  xgboost: true
+hyperparams:
+  svm_rbf:
+    C: 1.0
+    gamma: scale
+    class_weight: balanced
+  random_forest:
+    n_estimators: 200
+    max_depth: null
+    n_jobs: -1
+    class_weight: balanced
+  xgboost:
+    n_estimators: 150
+    max_depth: 4
+    learning_rate: 0.1
+    n_jobs: -1
+    tree_method: hist

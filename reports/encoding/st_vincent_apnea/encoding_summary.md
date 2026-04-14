@@ -1,0 +1,19 @@
+# Variable encoding summary
+
+## Topic alignment
+
+- **Nominal** columns (no natural order): one-hot encoding → `added_dummy_columns`.
+- **Ordinal** columns: integer codes 0..n-1 following the declared order.
+- **Binary** columns: mapped to 0.0 / 1.0.
+- Numeric scaling: use `scaling.py` / `--scale-method` after encoding.
+
+## Applied rules
+
+- Nominal: `[]`
+- Ordinal: `[]`
+- Binary: `[]`
+- `drop_first_dummy`: False
+
+## New dummy columns
+
+- (none)

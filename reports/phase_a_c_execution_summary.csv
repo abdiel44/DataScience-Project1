@@ -1,0 +1,8 @@
+dataset_task,raw_csv,raw_rows,raw_cols,prep_csv,prep_rows,prep_cols,eda_dir,eda_figures_png,eda_tables_csv,eda_summary
+ISRUC,data/processed/isruc_sleep_raw.csv,36162,116,data/processed/isruc_sleep_prep.csv,36162,118,reports/eda_raw/isruc_sleep_raw,32,5,reports\eda_raw\isruc_sleep_raw\eda_summary.md
+St Vincent,data/processed/st_vincent_apnea_raw.csv,25,10,data/processed/st_vincent_apnea_prep.csv,25,10,reports/eda_raw/st_vincent_apnea_raw,20,5,reports\eda_raw\st_vincent_apnea_raw\eda_summary.md
+MIT-BIH sleep stages,data/processed/mitbih_sleep_stages.csv,8645,38,data/processed/mitbih_sleep_stages_prep.csv,8645,43,reports/eda_raw/mitbih_sleep_stages_raw,32,5,reports\eda_raw\mitbih_sleep_stages_raw\eda_summary.md
+MIT-BIH respiratory events,data/processed/mitbih_respiratory_events.csv,3781,39,data/processed/mitbih_respiratory_events_prep.csv,3781,93,reports/eda_raw/mitbih_respiratory_events_raw,32,5,reports\eda_raw\mitbih_respiratory_events_raw\eda_summary.md
+SHHS sleep stages,data/processed/shhs_sleep_stages.csv,1080,29,data/processed/shhs_sleep_stages_prep.csv,1080,33,reports/eda_raw/shhs_sleep_stages_raw,32,5,reports\eda_raw\shhs_sleep_stages_raw\eda_summary.md
+SHHS respiratory events,data/processed/shhs_respiratory_events.csv,305,31,data/processed/shhs_respiratory_events_prep.csv,305,306,reports/eda_raw/shhs_respiratory_events_raw,32,5,reports\eda_raw\shhs_respiratory_events_raw\eda_summary.md
+Sleep-EDF Expanded,data/processed/sleep_edf_expanded_raw.csv,197,16,data/processed/sleep_edf_expanded_prep.csv,197,19,reports/eda_raw/sleep_edf_expanded_raw,24,5,reports\eda_raw\sleep_edf_expanded_raw\eda_summary.md

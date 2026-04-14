@@ -1,0 +1,82 @@
+\section{Resultados}
+
+\subsection{Staging intra-dataset en Sleep-EDF Expanded}
+
+\input{generated/tables/table_stage_intra}
+\input{generated/tables/table_stage_f1_by_class}
+\input{generated/tables/table_bootstrap_sleep_stage}
+
+La Tabla~\ref{tab:stage_intra} muestra que, dentro de \expname{sleep_edf_expanded_tuned}, \textbf{XGBoost} obtuvo el mejor rendimiento agregado por \emph{accuracy} (\(0.811 \pm 0.006\)) y \emph{kappa} (\(0.644 \pm 0.013\)), mientras que \textbf{Random Forest} alcanz\'o el mejor \emph{macro-F1} (\(0.608 \pm 0.018\)). La Tabla~\ref{tab:stage_f1_class} confirma adem\'as que la clase m\'as dif\'icil fue N1: incluso el mejor resultado en esa clase se qued\'o en \(0.256 \pm 0.026\) con Random Forest, muy por debajo de W, N2 y N3.
+
+En esta corrida afinada, la familia SVM no qued\'o registrada con los cinco folds completos y, por ello, el resumen agregado del experimento no la incluye en la Tabla~\ref{tab:stage_intra}. Esa ausencia se conserva expl\'icitamente como \emph{N/D} para no mezclar resultados incompletos con resultados cerrados. La familia SVM s\'i aparece completa en los otros experimentos del paquete final, particularmente en los escenarios \emph{cross-dataset} y en la bater\'ia de apnea.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{sleep_stage_best_confusion.png}
+\caption{Matriz de confusi\'on agregada del mejor modelo de staging intra-dataset (XGBoost) en \expname{sleep_edf_expanded_tuned}.}
+\label{fig:sleep_stage_confusion}
+\end{figure}
+
+La Figura~\ref{fig:sleep_stage_confusion} refuerza un patr\'on ya conocido en la literatura: las mayores confusiones se concentran alrededor de N1 y sus transiciones con W/N2. En cambio, W y N3 resultan m\'as estables, lo cual es coherente con el peso de las \feature{eeg\_*} relacionadas con potencia delta, potencia relativa y cruce por cero.
+
+\subsection{Staging cross-dataset}
+
+\input{generated/tables/table_cross_stage}
+
+La Tabla~\ref{tab:cross_stage} evidencia una ca\'ida severa por cambio de dominio. En la direcci\'on Sleep-EDF \(\rightarrow\) ISRUC, el mejor \emph{accuracy} fue Random Forest con 0.383, pero el mejor \emph{macro-F1} fue SVM-RBF con 0.273. En la direcci\'on ISRUC \(\rightarrow\) Sleep-EDF, Random Forest alcanz\'o la mejor \emph{accuracy} (0.477) y SVM-RBF el mejor \emph{macro-F1} (0.338). En ambos casos, los \emph{kappa} son cercanos a cero o negativos, lo que indica que la generalizaci\'on entre cohortes es d\'ebil incluso cuando el rendimiento bruto parece moderado.
+
+\subsection{MIT-BIH multitarget: apnea + staging}
+
+\input{generated/tables/table_mitbih_multitarget}
+\input{generated/tables/table_bootstrap_mitbih}
+
+La Tabla~\ref{tab:mitbih_multitarget} resume el experimento intra-dataset multitarget \expname{mitbih_apnea_stage_classic}. En t\'erminos de media por fold, \textbf{XGBoost} fue el mejor compromiso global: logr\'o el mayor AUC de apnea (\(0.640 \pm 0.043\)) y tambi\'en la mejor \emph{accuracy} de staging (\(0.608 \pm 0.040\)). Sin embargo, \textbf{SVM-RBF} destac\'o en sensibilidad de apnea (\(0.543 \pm 0.277\)), aunque a costa de peor especificidad y menor AUC global. Esto sugiere que el SVM es m\'as proclive a detectar positivos, pero menos estable cuando se eval\'ua discriminaci\'on global.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{mitbih_apnea_best_confusion.png}
+\caption{Matriz de confusi\'on agregada del mejor modelo de apnea en MIT-BIH.}
+\label{fig:mit_apnea_confusion}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{mitbih_apnea_best_roc.png}
+\caption{Curva ROC agregada del mejor modelo de apnea en MIT-BIH.}
+\label{fig:mit_apnea_roc}
+\end{figure}
+
+Las Figuras~\ref{fig:mit_apnea_confusion} y \ref{fig:mit_apnea_roc} muestran que el baseline de apnea es razonable como referencia acad\'emica, pero todav\'ia est\'a lejos de una herramienta de despliegue. El rango de AUC intra-dataset ronda 0.60--0.64 y la sensibilidad var\'ia mucho entre folds, se\~nal de que la distribuci\'on de eventos respiratorios sigue siendo un factor cr\'itico.
+
+\subsection{Apnea y staging cross-dataset}
+
+\input{generated/tables/table_cross_apnea}
+
+La Tabla~\ref{tab:cross_apnea} deja ver el hallazgo m\'as importante del trabajo: la \textbf{generalizaci\'on cross-dataset para apnea es fr\'agil}. En MIT-BIH \(\rightarrow\) St. Vincent, XGBoost alcanz\'o la mayor \emph{accuracy} (0.799), pero con sensibilidad 0.000 y especificidad 1.000, es decir, una soluci\'on dominada por la clase mayoritaria. En St. Vincent \(\rightarrow\) MIT-BIH el problema es todav\'ia m\'as evidente: los tres modelos obtuvieron sensibilidad 0.000. Este comportamiento confirma que la \emph{accuracy} aislada puede ser enga\~nosa en detecci\'on de apnea.
+
+\subsection{Pruebas estad\'isticas e importancia de variables}
+
+\input{generated/tables/table_stat_tests}
+
+La Tabla~\ref{tab:stat_tests} a\~nade una capa de interpretaci\'on estad\'istica. En staging intra-dataset y en staging sobre MIT-BIH, la prueba exacta de McNemar entre XGBoost y Random Forest entrega \(p < 0.001\), lo que respalda una diferencia real en sus errores. En apnea sobre MIT-BIH tambi\'en hay diferencia significativa (\(p=0.0043\)), pero la comparaci\'on pareada de AUC produce \(\Delta \mathrm{AUC} = -0.011\;[-0.016,-0.006]\), es decir, el AUC agregado por predicciones fuera de fold favorece levemente a Random Forest. Por tanto, la conclusi\'on sobre ``mejor modelo de apnea'' depende de si se resume por media de folds o por predicciones agregadas.
+
+\begin{figure*}[t]
+\centering
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{sleep_stage_xgboost_importance.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{mitbih_apnea_xgboost_importance.png}
+\end{minipage}
+\caption{Importancia de variables del mejor modelo de staging en Sleep-EDF (izquierda) y del mejor modelo de apnea en MIT-BIH (derecha).}
+\label{fig:feature_importance}
+\end{figure*}
+
+La Figura~\ref{fig:feature_importance} muestra que las \feature{eeg\_*} dominantes son coherentes con la fisiolog\'ia del sue\~no: potencia delta, potencia relativa, tasa de cruces por cero, relaci\'on theta/alpha, entrop\'ia espectral y medidas de movilidad/Hjorth. En apnea destacan adem\'as curtosis, SEF50 y SEF95, lo que sugiere sensibilidad a cambios de forma espectral compatibles con micro-despertares y fragmentaci\'on del sue\~no.
+
+\input{tables/table_published_comparison}
+
+Finalmente, la Tabla~\ref{tab:published_comparison} compara nuestros resultados con baselines publicados cercanos. Los n\'umeros propios son m\'as conservadores que varios reportes de la literatura, lo cual es esperable dado que aqu\'i se mantuvo una partici\'on \emph{subject-wise} estricta y una misma disciplina metodol\'ogica para todos los modelos.

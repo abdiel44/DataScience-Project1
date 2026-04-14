@@ -1,0 +1,120 @@
+experiment_name: cross_dataset_mitbih_to_st_vincent_classic
+random_seed: 42
+train_csv: data/processed/mitbih_apnea_stage_classic.parquet
+cross_dataset: true
+eval_csv: data/processed/st_vincent_apnea_stage_classic.parquet
+subject_column: subject_unit_id
+recording_column: recording_id
+task: classic_multitarget_apnea_stage
+targets:
+  stage_column: sleep_stage
+  apnea_column: apnea_binary
+feature_exclude:
+- epoch_store_row
+- sample_hz
+- samples_per_epoch
+- store_version
+- label_mask_apnea
+- label_mask_stage
+feature_include:
+- eeg_mean
+- eeg_std
+- eeg_var
+- eeg_rms
+- eeg_zero_crossing_rate
+- eeg_bandpower_delta
+- eeg_bandpower_theta
+- eeg_bandpower_alpha
+- eeg_bandpower_beta
+- eeg_rel_power_delta
+- eeg_rel_power_theta
+- eeg_rel_power_alpha
+- eeg_rel_power_beta
+- eeg_theta_alpha_ratio
+- eeg_spectral_entropy
+- eeg_sef50
+- eeg_sef95
+- eeg_hjorth_activity
+- eeg_hjorth_mobility
+- eeg_hjorth_complexity
+- eeg_sample_entropy
+- eeg_permutation_entropy
+- eeg_skewness
+- eeg_kurtosis
+tuning:
+  enabled: true
+  mode: nested_cv
+  inner_cv_splits: 3
+  search_method: grid
+  train_subject_subsample:
+    enabled: true
+    fraction: 0.5
+    min_subjects: 8
+  search_space:
+    svm_rbf:
+      C:
+      - 0.1
+      - 1
+      - 10
+      gamma:
+      - scale
+      - 0.01
+      - 0.1
+    random_forest:
+      n_estimators:
+      - 200
+      - 400
+      max_depth:
+      - null
+      - 10
+      - 20
+      min_samples_leaf:
+      - 1
+      - 5
+    xgboost:
+      n_estimators:
+      - 150
+      - 300
+      max_depth:
+      - 3
+      - 5
+      - 7
+      learning_rate:
+      - 0.03
+      - 0.1
+      subsample:
+      - 0.8
+      - 1.0
+      colsample_bytree:
+      - 0.8
+      - 1.0
+output:
+  root: reports/experiments
+  save_models: true
+  save_fold_models: false
+  save_final_model: true
+  resume_completed: true
+models:
+  svm_rbf: true
+  random_forest: true
+  xgboost: true
+hyperparams:
+  svm_rbf:
+    C: 1.0
+    gamma: scale
+    class_weight: balanced
+  random_forest:
+    n_estimators: 200
+    max_depth: null
+    min_samples_leaf: 1
+    n_jobs: -1
+    class_weight: balanced
+  xgboost:
+    n_estimators: 150
+    max_depth: 4
+    learning_rate: 0.1
+    subsample: 1.0
+    colsample_bytree: 1.0
+    n_jobs: -1
+    tree_method: hist
+    scale_pos_weight: 1.0
