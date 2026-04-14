@@ -22,6 +22,9 @@ data/processed/*
 !data/processed/.gitkeep
 
 # Reports
-reports/*
-!reports/.gitkeep
+
+# Local large datasets / external repos
+Data-Set's/
+Baselines/SleepEEGNet-master/
+
 
